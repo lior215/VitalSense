@@ -1,17 +1,15 @@
 package it.lior215.vitalsense.Event;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import it.lior215.vitalsense.Capabilities.EyeHealthProvider;
 import it.lior215.vitalsense.Capabilities.TimerProvider;
-import it.lior215.vitalsense.Screen.BlinkEffectScreen;
+import it.lior215.vitalsense.Effects.BlinkEffectScreen;
 import it.lior215.vitalsense.vitalsense;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ScreenEffectRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -21,8 +19,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID)
 public class ModBlinkingEvents {
-
-
 
 
     //BLINKING
@@ -47,24 +43,43 @@ public class ModBlinkingEvents {
         }
     }
 
+    private static boolean playerBlinking = false;
+    
+    public static boolean getPlayerBlinking() {
+        return playerBlinking;
+    }
     @SubscribeEvent
     public static void onPlayerTickBlink(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
             event.player.getCapability(TimerProvider.Timer).ifPresent(timer -> {
 
-                if(timer.getTimer() == 0) {
-                    timer.setTimer(140);
-
-                } else if (timer.getTimer() == 1) {
-                    event.player.sendSystemMessage(Component.literal("Blinked!"));
+                if (timer.getTimer() == 0) {
+                    timer.setTimer(150);
+                } else if (timer.getTimer() == 11) {
+                    event.player.sendSystemMessage(Component.literal("Start Blinked!"));
                     timer.decreaseTimer();
+                    playerBlinking = true;
+                } else if (timer.getTimer() == 1){
+                    timer.decreaseTimer();
+                    playerBlinking = false;
+                    //Debug: event.player.sendSystemMessage(Component.literal("Timer: "+timer.getTimer()));
                 } else {
                     timer.decreaseTimer();
-                     //Debug: event.player.sendSystemMessage(Component.literal("Timer: "+timer.getTimer()));
+
 
                 }
 
             });
         }
     }
+
+
+    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    public class BlinkOverlay {
+        @SubscribeEvent
+        public static void playerBlink(RenderGuiOverlayEvent.Post event) {
+                BlinkEffectScreen.Render();
+        }
+    }
 }
+
