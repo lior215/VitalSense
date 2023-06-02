@@ -3,7 +3,6 @@ package it.lior215.vitalsense.Event;
 import it.lior215.vitalsense.Capabilities.TimerProvider;
 import it.lior215.vitalsense.Effects.BlinkEffectScreen;
 import it.lior215.vitalsense.vitalsense;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -19,10 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID)
 public class ModBlinkingEvents {
-
-
     //BLINKING
-
     @SubscribeEvent
     public static void onAttachCapabilitiesPlayerBlink(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player) {
@@ -65,10 +61,7 @@ public class ModBlinkingEvents {
                     //Debug: event.player.sendSystemMessage(Component.literal("Timer: "+timer.getTimer()));
                 } else {
                     timer.decreaseTimer();
-
-
                 }
-
             });
         }
     }
