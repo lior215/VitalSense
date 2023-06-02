@@ -1,5 +1,6 @@
 package it.lior215.vitalsense.Event;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import it.lior215.vitalsense.Capabilities.EyeHealthProvider;
 import it.lior215.vitalsense.Capabilities.TimerProvider;
 import it.lior215.vitalsense.Screen.BlinkEffectScreen;
@@ -46,19 +47,20 @@ public class ModBlinkingEvents {
         }
     }
 
-
     @SubscribeEvent
     public static void onPlayerTickBlink(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
             event.player.getCapability(TimerProvider.Timer).ifPresent(timer -> {
 
-                if(timer.getTimer() == 1) {
-                    event.player.sendSystemMessage(Component.literal("Blinked!"));
-                } else if (timer.getTimer() == 0) {
+                if(timer.getTimer() == 0) {
                     timer.setTimer(140);
+
+                } else if (timer.getTimer() == 1) {
+                    event.player.sendSystemMessage(Component.literal("Blinked!"));
+                    timer.decreaseTimer();
                 } else {
                     timer.decreaseTimer();
-                    // Debug: event.player.sendSystemMessage(Component.literal("Timer: "+timer.getTimer()));
+                     //Debug: event.player.sendSystemMessage(Component.literal("Timer: "+timer.getTimer()));
 
                 }
 

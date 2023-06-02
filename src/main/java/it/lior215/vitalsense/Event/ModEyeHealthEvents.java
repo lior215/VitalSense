@@ -19,7 +19,6 @@ import net.minecraftforge.fml.common.Mod;
 public class ModEyeHealthEvents {
 
 
-
     //EYE HEALTH
 
     @SubscribeEvent
@@ -47,26 +46,24 @@ public class ModEyeHealthEvents {
     public static void onPlayerUnderWaterEyeDamage(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
             event.player.getCapability(TimerProvider.Timer).ifPresent(timer -> {
-                if(timer.getTimer() == 0) {
+                if (timer.getTimer() == 0) {
                     timer.setTimer(50);
-                } else if (timer.getTimer() == 1){
+                } else if (timer.getTimer() == 1) {
                     event.player.getCapability(EyeHealthProvider.EyeHealth).ifPresent(eyeHealth -> {
-                        if(event.player.isEyeInFluidType(Fluids.WATER.getFluidType()) == true) {
+                        if (event.player.isEyeInFluidType(Fluids.WATER.getFluidType()) == true) {
                             eyeHealth.reduceHealthValue(2.5f);
-                            event.player.sendSystemMessage(Component.literal("NOOO MY EYESS "+eyeHealth.getHealthValue()));
+                            event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
                         } else if (event.player.isEyeInFluidType(Fluids.LAVA.getFluidType())) {
                             eyeHealth.reduceHealthValue(10f);
                         }
+                        timer.decreaseTimer();
                     });
                 } else {
                     timer.decreaseTimer();
+                    //Debug: event.player.sendSystemMessage(Component.literal("Timer EyeHealth: "+timer.getTimer()));
                 }
 
             });
         }
     }
-
-
-
-
 }
