@@ -6,6 +6,7 @@ import it.lior215.vitalsense.vitalsense;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -44,13 +45,25 @@ public class ModBlinkingEvents {
     }
 
     private static boolean playerBlinking = false;
+    private static boolean canStartBlinkingTimer = true;
+
+    public static void setCanStartBlinkingTimer(boolean value) {
+        canStartBlinkingTimer = value;
+    }
     
     public static boolean getPlayerBlinking() {
         return playerBlinking;
     }
+
+    public static void setPlayerBlinking(boolean value) {
+        playerBlinking = value;
+    }
     @SubscribeEvent
     public static void onPlayerTickBlink(TickEvent.PlayerTickEvent event) {
-        if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
+
+
+
+        if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START && canStartBlinkingTimer) {
             event.player.getCapability(TimerProvider.Timer).ifPresent(timer -> {
 
                 if (timer.getTimer() == 0) {
@@ -59,9 +72,10 @@ public class ModBlinkingEvents {
                     event.player.sendSystemMessage(Component.literal("Start Blinked!"));
                     timer.decreaseTimer();
                     playerBlinking = true;
+                    canStartBlinkingTimer = false;
                 } else if (timer.getTimer() == 1){
                     timer.decreaseTimer();
-                    playerBlinking = false;
+                    //playerBlinking = false;
                     //Debug: event.player.sendSystemMessage(Component.literal("Timer: "+timer.getTimer()));
                 } else {
                     timer.decreaseTimer();
@@ -71,15 +85,16 @@ public class ModBlinkingEvents {
 
             });
         }
+
     }
 
 
     @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
     public class BlinkOverlay {
-        @SubscribeEvent
+       /* @SubscribeEvent
         public static void playerBlink(RenderGuiOverlayEvent.Post event) {
-                BlinkEffectScreen.Render();
-        }
+                BlinkEffectScreen.Render(screenDivider);
+        }*/
     }
 }
 
