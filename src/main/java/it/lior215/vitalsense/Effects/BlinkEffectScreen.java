@@ -2,21 +2,17 @@ package it.lior215.vitalsense.Effects;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
 import it.lior215.vitalsense.Event.ModBlinkingEvents;
 import it.lior215.vitalsense.vitalsense;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.RenderBuffers;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.network.chat.Component;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderHighlightEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -34,7 +30,7 @@ public class BlinkEffectScreen {
     static int screenDivider = 11;
 
 
-    public static void Render(double screenDivider,int multiplier) {
+    public static void Render(double screenDivider, int multiplier) {
         Player player = Minecraft.getInstance().player;
         screenWidth = mc.getWindow().getGuiScaledWidth();
         screenHeight = mc.getWindow().getGuiScaledHeight();
@@ -43,8 +39,6 @@ public class BlinkEffectScreen {
         if (ModBlinkingEvents.getPlayerBlinking()) {
             pose.pushPose();
             RenderSystem.enableDepthTest();
-            RenderSystem.depthFunc(519);
-            //pose.translate(0.0, 50.0, 0);
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -53,8 +47,8 @@ public class BlinkEffectScreen {
             Tesselator tesselator = Tesselator.getInstance();
             BufferBuilder bufferbuilder = tesselator.getBuilder();
             bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.vertex(0.0D, (double) screenHeight/screenDivider * multiplier, -90.0D).uv(0.0F, 1.0F).endVertex(); // IMPORTANT
-            bufferbuilder.vertex(screenWidth, (double) screenHeight/screenDivider * multiplier, -90.0D).uv(1.0F, 1.0F).endVertex(); // IMPORTANT
+            bufferbuilder.vertex(0.0D, (double) screenHeight / screenDivider * multiplier, -90.0D).uv(0.0F, 1.0F).endVertex(); // IMPORTANT
+            bufferbuilder.vertex(screenWidth, (double) screenHeight / screenDivider * multiplier, -90.0D).uv(1.0F, 1.0F).endVertex(); // IMPORTANT
             bufferbuilder.vertex(screenWidth, 0.0D, -90.0D).uv(1.0F, 0.0F).endVertex(); // IMPORTANT
             bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 0.0F).endVertex(); // IMPORTANT
             tesselator.end();
@@ -63,48 +57,59 @@ public class BlinkEffectScreen {
             RenderSystem.setShaderColor(0.0F, 0.0F, 1.0F, 1.0F);
             RenderSystem.disableBlend();
             pose.popPose();
-            RenderSystem.depthFunc(515);
+
 
         }
     }
 
-    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)  //TODO: aggiungere un'effetto di accellerazione e far si che circa 1/5 delle palpebre su schermo si chiuda da sotto e aggiungere casistica se <0 allora 0
     public static class RenderBlinkEventClass {
 
-    
-    @SubscribeEvent
-    public static void onRenderTick(TickEvent.RenderTickEvent event) {
 
-        if(event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingEvents.getPlayerBlinking()) {
+        @SubscribeEvent
+        public static void onRenderTick(TickEvent.RenderTickEvent event) {
 
-            if (Timer > 11 && Timer <= 22) {
+            if (event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingEvents.getPlayerBlinking()) {
+
+                if (Timer > 11 && Timer <= 22) {
+                    multiplier++;
+                    Timer--;
+
+                } else if (Timer > 0 && Timer <= 11) {
+
+                    multiplier--;
+                    Timer--;
+                } else if (Timer <= 0) {
+
+                    screenDivider = 11;
+                    multiplier = 1;
+                    Timer = 23;
+                    ModBlinkingEvents.setPlayerBlinking(false);
+                    ModBlinkingEvents.setCanStartBlinkingTimer(true);
+                } else {
+                    Timer -= 1;
+                }
+
+
+                //If player has pressed F1 the render will not be hided!
+                if (ModBlinkingEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui) {
+                    Render(screenDivider, multiplier);
+                }
+
+            }
+
+
+        }
+
+        @SubscribeEvent
+        public static void playerBlink(RenderGuiOverlayEvent.Post event) {
+            Player player = Minecraft.getInstance().player;
+
+            if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingEvents.getPlayerBlinking()) {
                 Render(screenDivider, multiplier);
-                multiplier++;
-                Timer--;
-
-            } else if (Timer > 0 && Timer <= 11 ) {
-
-                multiplier--;
-                Render(screenDivider, multiplier);
-                Timer--;
-            } else if (Timer <= 0) {
-
-                screenDivider = 11;
-                multiplier = 1;
-                Timer = 23;
-                ModBlinkingEvents.setPlayerBlinking(false);
-                ModBlinkingEvents.setCanStartBlinkingTimer(true);
-            } else {
-                Timer -= 1;
             }
 
         }
-
-    }
-        @SubscribeEvent
-        public static void playerBlink(RenderGuiOverlayEvent.Post event) {
-        }
-
     }
 }
 
