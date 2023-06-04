@@ -26,11 +26,12 @@ public class BlinkEffectScreen {
     protected static int screenWidth;
     protected static int screenHeight;
     private static int multiplier = 1;
+    private static int belowMultiplier = 10; //A è 5 mentre B è 6
     static int Timer = 0;
-    static int screenDivider = 11;
+    static int screenDivider = 10;
 
 
-    public static void Render(double screenDivider, int multiplier) {
+    public static void Render(double screenDivider, int multiplier, boolean renderBelow, float transparency) {
         Player player = Minecraft.getInstance().player;
         screenWidth = mc.getWindow().getGuiScaledWidth();
         screenHeight = mc.getWindow().getGuiScaledHeight();
@@ -42,15 +43,22 @@ public class BlinkEffectScreen {
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1F);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, transparency); //transparency
             RenderSystem.setShaderTexture(0, IMG_LOCATION);
             Tesselator tesselator = Tesselator.getInstance();
             BufferBuilder bufferbuilder = tesselator.getBuilder();
             bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            bufferbuilder.vertex(0.0D, (double) screenHeight / screenDivider * multiplier, -90.0D).uv(0.0F, 1.0F).endVertex(); // IMPORTANT
-            bufferbuilder.vertex(screenWidth, (double) screenHeight / screenDivider * multiplier, -90.0D).uv(1.0F, 1.0F).endVertex(); // IMPORTANT
-            bufferbuilder.vertex(screenWidth, 0.0D, -90.0D).uv(1.0F, 0.0F).endVertex(); // IMPORTANT
-            bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 0.0F).endVertex(); // IMPORTANT
+            if (!renderBelow) {
+                bufferbuilder.vertex(0.0D, (double) screenHeight / screenDivider * multiplier, -90.0D).uv(0.0F, 1.0F).endVertex(); // IMPORTANT
+                bufferbuilder.vertex(screenWidth, (double) screenHeight / screenDivider * multiplier, -90.0D).uv(1.0F, 1.0F).endVertex(); // IMPORTANT
+                bufferbuilder.vertex(screenWidth, 0.0D, -90.0D).uv(1.0F, 0.0F).endVertex(); // IMPORTANT
+                bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 0.0F).endVertex(); // IMPORTANT
+            } else {
+                bufferbuilder.vertex(0.0D, (double) screenHeight, -90.0D).uv(0.0F, 1.0F).endVertex(); // Bottom left corner
+                bufferbuilder.vertex(screenWidth, (double) screenHeight, -90.0D).uv(1.0F, 1.0F).endVertex(); // Bottom right corner
+                bufferbuilder.vertex(screenWidth, (double) screenHeight / screenDivider * belowMultiplier, -90.0D).uv(1.0F, 0.0F).endVertex(); // Top right corner
+                bufferbuilder.vertex(0.0D, (double) screenHeight / screenDivider * belowMultiplier, -90.0D).uv(0.0F, 0.0F).endVertex(); // Top left corner
+            }
             tesselator.end();
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
@@ -62,7 +70,7 @@ public class BlinkEffectScreen {
         }
     }
 
-    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)  //TODO: aggiungere un'effetto di accellerazione e far si che circa 1/5 delle palpebre su schermo si chiuda da sotto e aggiungere casistica se <0 allora 0
+    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)  //TODO: aggiungere un'effetto di accellerazione e aggiungere casistica se <0 allora 0, aggiungere diverse texture in base al light level
     public static class RenderBlinkEventClass {
 
 
@@ -71,44 +79,56 @@ public class BlinkEffectScreen {
 
             if (event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingEvents.getPlayerBlinking()) {
 
-                if (Timer > 11 && Timer <= 22) {
+                if (Timer > 8 && Timer <= 15) {
                     multiplier++;
                     Timer--;
 
-                } else if (Timer > 0 && Timer <= 11) {
-
+                } else if (Timer > 0 && Timer <= 8) {
                     multiplier--;
                     Timer--;
-                } else if (Timer <= 0) {
 
-                    screenDivider = 11;
+                } else if (Timer <= 0) {
                     multiplier = 1;
-                    Timer = 23;
+                    belowMultiplier = 10;
+                    Timer = 15;
                     ModBlinkingEvents.setPlayerBlinking(false);
                     ModBlinkingEvents.setCanStartBlinkingTimer(true);
+
                 } else {
-                    Timer -= 1;
+                    Timer -= 1; //tecnically i don't need it anymore
+
+                }
+
+                //RenderBelow manager
+                if (Timer > 8 && Timer <= 13) {
+                    belowMultiplier--;
+                } else if (Timer > 3 && Timer <=8) {
+                    belowMultiplier++;
                 }
 
 
-                //If player has pressed F1 the render will not be hided!
+                //If player has pressed F1 the render will not be hidden TODO: create config render during F1
                 if (ModBlinkingEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui) {
-                    Render(screenDivider, multiplier);
+                    Render(screenDivider, multiplier, false,1.0f);
+
+                    if (Timer > 3 && Timer <=13) {
+                        Render(screenDivider, belowMultiplier, true,1.0f);
+                    }
                 }
-
             }
-
 
         }
 
         @SubscribeEvent
         public static void playerBlink(RenderGuiOverlayEvent.Post event) {
             Player player = Minecraft.getInstance().player;
-
             if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingEvents.getPlayerBlinking()) {
-                Render(screenDivider, multiplier);
-            }
+                Render(screenDivider, multiplier, false,1.0f);
 
+                if (Timer > 3 && Timer <=13) {
+                    Render(screenDivider, belowMultiplier, true,1.0f);
+                }
+            }
         }
     }
 }

@@ -40,8 +40,8 @@ public class ModBlinkingEvents {
         }
     }
 
-    private static boolean playerBlinking = false;
-    private static boolean canStartBlinkingTimer = true;
+    private static boolean playerBlinking = true;
+    private static boolean canStartBlinkingTimer = false;
 
     public static void setCanStartBlinkingTimer(boolean value) {
         canStartBlinkingTimer = value;
@@ -61,15 +61,14 @@ public class ModBlinkingEvents {
 
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START && canStartBlinkingTimer) {
             event.player.getCapability(TimerProvider.Timer).ifPresent(timer -> {
-
-                if (timer.getTimer() == 0) {
+                if (timer.getTimer() <= 0) {
                     timer.setTimer(150);
                 } else if (timer.getTimer() == 11) {
                     event.player.sendSystemMessage(Component.literal("Start Blinked!"));
                     timer.decreaseTimer();
                     playerBlinking = true;
                     canStartBlinkingTimer = false;
-                } else if (timer.getTimer() == 1){
+                } else if (timer.getTimer() == 1) {
                     timer.decreaseTimer();
                     //playerBlinking = false;
                     //Debug: event.player.sendSystemMessage(Component.literal("Timer: "+timer.getTimer()));

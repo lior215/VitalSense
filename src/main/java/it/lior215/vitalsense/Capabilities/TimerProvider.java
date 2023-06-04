@@ -20,9 +20,21 @@ public class TimerProvider implements ICapabilityProvider, INBTSerializable<Comp
 
     public final LazyOptional<Timer> optional = LazyOptional.of(this::initializeTimer);
 
+    private int timerStartValue;
+
+
+    public TimerProvider() {
+        this.timerStartValue = 0;
+    }
+
+    public TimerProvider(int timerStartValue) {
+        this.timerStartValue = timerStartValue;
+    }
+
+
     private Timer initializeTimer() {
         if(this.timer == null) {
-            this.timer = new Timer();
+            this.timer = new Timer(timerStartValue);
         }
 
         return this.timer;

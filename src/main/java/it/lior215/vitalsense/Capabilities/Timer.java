@@ -10,6 +10,11 @@ public class Timer {
     boolean autoblink = true;
 
 
+    public Timer(int startValue) {
+        this.timer = startValue;
+    }
+
+
     public int getTimer() {
         return this.timer;
     }
@@ -19,6 +24,7 @@ public class Timer {
     public void decreaseTimer() {
         this.timer = this.timer -= 1;
     }
+
 
 
 
