@@ -78,41 +78,38 @@ public class BlinkEffectScreen {
         public static void onRenderTick(TickEvent.RenderTickEvent event) {
 
             if (event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingEvents.getPlayerBlinking()) {
-
-                if (Timer > 8 && Timer <= 15) {
-                    multiplier++;
-                    Timer--;
-
-                } else if (Timer > 0 && Timer <= 8) {
-                    multiplier--;
-                    Timer--;
-
-                } else if (Timer <= 0) {
+                //Timer manager
+                if (Timer <= 0) {
+                    Timer = 15;
                     multiplier = 1;
                     belowMultiplier = 10;
-                    Timer = 15;
+
                     ModBlinkingEvents.setPlayerBlinking(false);
                     ModBlinkingEvents.setCanStartBlinkingTimer(true);
-
                 } else {
-                    Timer -= 1; //tecnically i don't need it anymore
+                    Timer--;
+                }
 
+                //RenderUpper manager
+                if (Timer > 8 && Timer <= 15) {
+                    multiplier++;
+                } else if (Timer > 0 && Timer <= 8) {
+                    multiplier--;
                 }
 
                 //RenderBelow manager
                 if (Timer > 8 && Timer <= 13) {
-                    belowMultiplier--;
-                } else if (Timer > 3 && Timer <=8) {
                     belowMultiplier++;
+                } else if (Timer > 3 && Timer <= 8) {
+                    belowMultiplier--;
                 }
-
 
                 //If player has pressed F1 the render will not be hidden TODO: create config render during F1
                 if (ModBlinkingEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui) {
-                    Render(screenDivider, multiplier, false,1.0f);
+                    Render(screenDivider, multiplier, false, 1.0f);
 
                     if (Timer > 3 && Timer <=13) {
-                        Render(screenDivider, belowMultiplier, true,1.0f);
+                        Render(screenDivider, belowMultiplier, true, 1.0f);
                     }
                 }
             }
@@ -131,5 +128,8 @@ public class BlinkEffectScreen {
             }
         }
     }
+    //TODO: creare un sistema in cui controllando momenti del giorno, lightlevel e il tempo atmosferico ricavo diversi UV all'interno di una color map
+    //TODO: che dovrà essere settabile tramite un metodo
+
 }
 
