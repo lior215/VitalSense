@@ -6,8 +6,6 @@ import it.lior215.vitalsense.Event.ModBlinkingEvents;
 import it.lior215.vitalsense.vitalsense;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -19,8 +17,6 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import javax.annotation.Nullable;
 
 public class RenderBlinkEffectScreen {
 
