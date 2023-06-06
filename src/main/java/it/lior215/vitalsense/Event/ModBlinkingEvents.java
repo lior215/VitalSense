@@ -1,7 +1,6 @@
 package it.lior215.vitalsense.Event;
 
 import it.lior215.vitalsense.Capabilities.TimerProvider;
-import it.lior215.vitalsense.Effects.BlinkEffectScreen;
 import it.lior215.vitalsense.vitalsense;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
