@@ -1,7 +1,7 @@
 package it.lior215.vitalsense.Event;
 
 import it.lior215.vitalsense.Capabilities.EyeHealthProvider;
-import it.lior215.vitalsense.Capabilities.TimerProvider;
+import it.lior215.vitalsense.DevUtils.TimerProvider;
 import it.lior215.vitalsense.vitalsense;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID)
 public class ModEyeHealthEvents {
+
+    private static TimerProvider timer = new TimerProvider(50);
 
 
     //EYE HEALTH
@@ -45,9 +47,8 @@ public class ModEyeHealthEvents {
     @SubscribeEvent
     public static void onPlayerUnderWaterEyeDamage(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
-            event.player.getCapability(TimerProvider.Timer).ifPresent(timer -> {
-                if (timer.getTimer() == 0) {
-                    timer.setTimer(50);
+                if (timer.getTimer() <= 0) {
+                    timer.setTimerToStartValue();
                 } else if (timer.getTimer() == 1) {
                     event.player.getCapability(EyeHealthProvider.EyeHealth).ifPresent(eyeHealth -> {
                         if (event.player.isEyeInFluidType(Fluids.WATER.getFluidType()) == true) {
@@ -60,10 +61,7 @@ public class ModEyeHealthEvents {
                     });
                 } else {
                     timer.decreaseTimer();
-                    //Debug: event.player.sendSystemMessage(Component.literal("Timer EyeHealth: "+timer.getTimer()));
                 }
-
-            });
         }
     }
 }

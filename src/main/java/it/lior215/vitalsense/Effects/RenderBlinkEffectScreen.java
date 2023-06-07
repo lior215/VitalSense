@@ -2,6 +2,7 @@ package it.lior215.vitalsense.Effects;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import it.lior215.vitalsense.DevUtils.LightLevelProvider;
 import it.lior215.vitalsense.Event.ModBlinkingEvents;
 import it.lior215.vitalsense.vitalsense;
 import net.minecraft.client.Minecraft;
@@ -9,8 +10,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -20,6 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 
 public class RenderBlinkEffectScreen {
 
+    private static LightLevelProvider lightLevelProvider = new LightLevelProvider();
     static Minecraft mc = Minecraft.getInstance();
     protected static int screenWidth;
     protected static int screenHeight;
@@ -29,9 +29,10 @@ public class RenderBlinkEffectScreen {
     private static int screenDivider = 10;
     private static float UV_U;
     private static float UV_V;
-    private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "misc/blink.png");
+    private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "misc/blinkcolormap.png");
     private static ResourceLocation CUSTOM_IMG_LOCATION = null;
     private static ResourceLocation RENDERED_IMG_LOCATION;
+
 
 
 
@@ -50,30 +51,34 @@ public class RenderBlinkEffectScreen {
         }
     }
 
-    public static void checkUvToLightLevel() { //check for sky light too
-        float textureSize = 359;
+    public static void checkUvToLightLevel() {
+        float textureSize = 256;
         Player player = Minecraft.getInstance().player;
-        Level level = Minecraft.getInstance().level;
-        int lightLevel = player.level.getBrightness(LightLayer.BLOCK, player.getOnPos().offset(0,+1,0));
-        //texture size 359 pixels
-        if(lightLevel >= 0 && lightLevel < 3){
-            UV_U = 30/textureSize;
-            UV_V = 150/textureSize;
-        } else if (lightLevel >= 3 && lightLevel < 6) {
-            UV_U = 30/textureSize;
-            UV_V = 90/textureSize;
-        } else if (lightLevel >= 6 && lightLevel < 9) {
-            UV_U = 90/textureSize;
-            UV_V = 30/textureSize;
-        } else if (lightLevel >= 9 && lightLevel < 11) {
-            UV_U = 260/textureSize;
-            UV_V = 170/textureSize;
-        } else if (lightLevel >= 11 && lightLevel < 13) {
-            UV_U = 140/textureSize;
-            UV_V = 170/textureSize;
-        } else if (lightLevel >=13) {
-            UV_U = (250 / textureSize);
-            UV_V = (330 / textureSize);
+        assert player != null;
+        int actualLightLevel = lightLevelProvider.playerPoscheckDynamicLightLevel(player);
+
+
+        if(actualLightLevel >= 0 && actualLightLevel < 2){ //set
+            UV_U = 2/textureSize;
+            UV_V = 254/textureSize;
+        } else if (actualLightLevel >= 2 && actualLightLevel < 4) {
+            UV_U = 248/textureSize;
+            UV_V = 210/textureSize;
+        } else if (actualLightLevel >= 4 && actualLightLevel < 6) {
+            UV_U = 248/textureSize;
+            UV_V = 185/textureSize;
+        } else if (actualLightLevel >= 6 && actualLightLevel < 8) { //set
+            UV_U = 253/textureSize;
+            UV_V = 131/textureSize;
+        } else if (actualLightLevel >= 8 && actualLightLevel < 10) { //set
+            UV_U = 248/textureSize;
+            UV_V = 131/textureSize;
+        } else if (actualLightLevel >= 10 && actualLightLevel < 13) {
+            UV_U = 200/textureSize;
+            UV_V = 131/textureSize;
+        } else if (actualLightLevel >=13) {
+            UV_U = (191 / textureSize);
+            UV_V = (128 / textureSize);
         }
     }
 
@@ -82,23 +87,23 @@ public class RenderBlinkEffectScreen {
 
 
     //Rendering Manager
-    public static void Render(double screenDivider, int multiplier, boolean renderBelow, float transparency) {
-        setBlinkImage(vitalsense.MOD_ID, "misc/blinkcolormap.png");
-        checkUvToLightLevel();
+    public static void render(double screenDivider, int multiplier, boolean renderBelow, float transparency) {
         checkCustomImage();
+        checkUvToLightLevel();
         Player player = Minecraft.getInstance().player;
         screenWidth = mc.getWindow().getGuiScaledWidth();
         screenHeight = mc.getWindow().getGuiScaledHeight();
         PoseStack pose = RenderSystem.getModelViewStack();
         assert player != null;
+
         if (ModBlinkingEvents.getPlayerBlinking()) {
             pose.pushPose();
             RenderSystem.enableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderColor(1f, 1F, 1F, transparency); //transparency
-            RenderSystem.setShaderTexture(0, CUSTOM_IMG_LOCATION);
+            RenderSystem.setShaderColor(1f, 1f, 1f, transparency); //transparency
+            RenderSystem.setShaderTexture(0, RENDERED_IMG_LOCATION);
             Tesselator tesselator = Tesselator.getInstance();
             BufferBuilder bufferbuilder = tesselator.getBuilder();
             bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
@@ -113,16 +118,21 @@ public class RenderBlinkEffectScreen {
                 bufferbuilder.vertex(screenWidth, (double) screenHeight / screenDivider * belowMultiplier, -90.0D).uv(UV_U, UV_V).endVertex(); // Top right corner
                 bufferbuilder.vertex(0.0D, (double) screenHeight / screenDivider * belowMultiplier, -90.0D).uv(UV_U, UV_V).endVertex(); // Top left corner
             }
-            player.sendSystemMessage(Component.literal("U: "+UV_U+" V: "+UV_V));
             tesselator.end();
+            RenderSystem.setShaderColor(0.0F, 0.0F, 1.0F, 1.0F);
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
-            RenderSystem.setShaderColor(0.0F, 0.0F, 1.0F, 1.0F);
+            RenderSystem.defaultBlendFunc();
             RenderSystem.disableBlend();
             pose.popPose();
 
 
         }
+    }
+
+    public void renderGetUv() {
+        assert mc.player != null;
+        mc.player.sendSystemMessage(Component.literal("U: "+UV_U+" V: "+UV_V));
     }
 
     @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)  //TODO: aggiungere un'effetto di accellerazione e aggiungere casistica se <0 allora 0
@@ -132,7 +142,7 @@ public class RenderBlinkEffectScreen {
         @SubscribeEvent
         public static void onRenderTick(TickEvent.RenderTickEvent event) {
 
-            if (event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingEvents.getPlayerBlinking()) {
+            if (event.side.isClient() && event.phase == TickEvent.Phase.START && ModBlinkingEvents.getPlayerBlinking()) {
                 //Timer manager
                 if (Timer <= 0) {
                     Timer = 15;
@@ -161,10 +171,10 @@ public class RenderBlinkEffectScreen {
 
                 //If player has pressed F1 the render will not be hidden TODO: create config render during F1
                 if (ModBlinkingEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui) {
-                    Render(screenDivider, multiplier, false, 1.0f);
+                    render(screenDivider, multiplier, false, 1.0f);
 
                     if (Timer > 3 && Timer <=13) {
-                        Render(screenDivider, belowMultiplier, true, 1.0f);
+                        render(screenDivider, belowMultiplier, true, 1.0f);
                     }
                 }
             }
@@ -175,10 +185,10 @@ public class RenderBlinkEffectScreen {
         public static void playerBlink(RenderGuiOverlayEvent.Post event) {
             Player player = Minecraft.getInstance().player;
             if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingEvents.getPlayerBlinking()) {
-                Render(screenDivider, multiplier, false,1.0f);
+                render(screenDivider, multiplier, false,1.0f);
 
                 if (Timer > 3 && Timer <=13) {
-                    Render(screenDivider, belowMultiplier, true,1.0f);
+                    render(screenDivider, belowMultiplier, true,1.0f);
                 }
             }
         }
