@@ -15,8 +15,6 @@ public class TimerProvider {
         setTimer(startTimerValue);
         this.startTimerValue = startTimerValue;
     }
-    
-    
 
 
     public int getTimer() {

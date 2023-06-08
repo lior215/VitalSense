@@ -30,7 +30,7 @@ public class RenderBlinkEffectScreen {
     private static int screenDivider = 10;
     private static float UV_U;
     private static float UV_V;
-    private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "misc/blinkcolormap.png");
+    private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/blink_colormap.png");
     private static ResourceLocation CUSTOM_IMG_LOCATION = null;
     private static ResourceLocation RENDERED_IMG_LOCATION;
 
@@ -57,7 +57,6 @@ public class RenderBlinkEffectScreen {
         Player player = Minecraft.getInstance().player;
         assert player != null;
         int actualLightLevel = lightLevelProvider.playerPosCheckDynamicLightLevel(player);
-
 
         if(actualLightLevel >= 0 && actualLightLevel < 2){
             UV_U = 2/textureSize;
@@ -125,8 +124,6 @@ public class RenderBlinkEffectScreen {
             RenderSystem.defaultBlendFunc();
             RenderSystem.disableBlend();
             pose.popPose();
-
-
         }
     }
 
