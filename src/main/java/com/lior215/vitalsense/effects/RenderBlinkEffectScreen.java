@@ -52,7 +52,7 @@ public class RenderBlinkEffectScreen {
         }
     }
 
-    public static void checkUvToLightLevelOrWater() {
+    public static void checkUvToLightLevelOrWater() { //
         float textureSize = 256;
         Player player = Minecraft.getInstance().player;
         assert player != null;
