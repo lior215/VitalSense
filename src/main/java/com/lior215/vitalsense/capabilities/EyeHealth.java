@@ -1,4 +1,4 @@
-package it.lior215.vitalsense.Capabilities;
+package com.lior215.vitalsense.capabilities;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;

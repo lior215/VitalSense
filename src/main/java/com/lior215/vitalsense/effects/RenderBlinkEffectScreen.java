@@ -1,11 +1,11 @@
-package it.lior215.vitalsense.Effects;
+package com.lior215.vitalsense.effects;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import it.lior215.vitalsense.Config.ModCommonConfigs;
-import it.lior215.vitalsense.DevUtils.LightLevelProvider;
-import it.lior215.vitalsense.Event.ModBlinkingEvents;
-import it.lior215.vitalsense.vitalsense;
+import com.lior215.vitalsense.config.ModCommonConfigs;
+import com.lior215.vitalsense.utils.LightLevelProvider;
+import com.lior215.vitalsense.event.ModBlinkingEvents;
+import com.lior215.vitalsense.vitalsense;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;

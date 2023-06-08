@@ -1,8 +1,8 @@
-package it.lior215.vitalsense.Event;
+package com.lior215.vitalsense.event;
 
-import it.lior215.vitalsense.Capabilities.EyeHealthProvider;
-import it.lior215.vitalsense.DevUtils.TimerProvider;
-import it.lior215.vitalsense.vitalsense;
+import com.lior215.vitalsense.utils.TimerProvider;
+import com.lior215.vitalsense.vitalsense;
+import com.lior215.vitalsense.capabilities.EyeHealthProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;

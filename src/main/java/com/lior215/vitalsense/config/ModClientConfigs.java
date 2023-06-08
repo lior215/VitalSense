@@ -1,4 +1,4 @@
-package it.lior215.vitalsense.Config;
+package com.lior215.vitalsense.config;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.ForgeConfigSpec;

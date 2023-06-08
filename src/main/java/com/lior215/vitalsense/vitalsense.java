@@ -1,9 +1,9 @@
-package it.lior215.vitalsense;
+package com.lior215.vitalsense;
 
+import com.lior215.vitalsense.effects.RenderBlinkEffectScreen;
 import com.mojang.logging.LogUtils;
-import it.lior215.vitalsense.Config.ModClientConfigs;
-import it.lior215.vitalsense.Config.ModCommonConfigs;
-import it.lior215.vitalsense.Effects.RenderBlinkEffectScreen;
+import com.lior215.vitalsense.config.ModClientConfigs;
+import com.lior215.vitalsense.config.ModCommonConfigs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;

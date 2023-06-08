@@ -1,8 +1,5 @@
-package it.lior215.vitalsense.DevUtils;
+package com.lior215.vitalsense.utils;
 
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LightLayer;
 
