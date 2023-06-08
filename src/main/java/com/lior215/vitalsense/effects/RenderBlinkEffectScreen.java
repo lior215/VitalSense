@@ -52,34 +52,39 @@ public class RenderBlinkEffectScreen {
         }
     }
 
-    public static void checkUvToLightLevel() {
+    public static void checkUvToLightLevelOrWater() {
         float textureSize = 256;
         Player player = Minecraft.getInstance().player;
         assert player != null;
-        int actualLightLevel = lightLevelProvider.playerPosCheckDynamicLightLevel(player);
+        int actualLightLevel;
 
-
-        if(actualLightLevel >= 0 && actualLightLevel < 2){
-            UV_U = 2/textureSize;
-            UV_V = 255/textureSize;
-        } else if (actualLightLevel >= 2 && actualLightLevel < 4) {
-            UV_U = 248/textureSize;
-            UV_V = 210/textureSize;
-        } else if (actualLightLevel >= 4 && actualLightLevel < 6) {
-            UV_U = 248/textureSize;
-            UV_V = 185/textureSize;
-        } else if (actualLightLevel >= 6 && actualLightLevel < 8) {
-            UV_U = 253/textureSize;
-            UV_V = 131/textureSize;
-        } else if (actualLightLevel >= 8 && actualLightLevel < 10) {
-            UV_U = 248/textureSize;
-            UV_V = 131/textureSize;
-        } else if (actualLightLevel >= 10 && actualLightLevel < 13) {
-            UV_U = 200/textureSize;
-            UV_V = 131/textureSize;
-        } else if (actualLightLevel >=13) {
-            UV_U = (191 / textureSize);
-            UV_V = (128 / textureSize);
+        if(!player.isUnderWater()) {
+            actualLightLevel = lightLevelProvider.playerPosCheckDynamicLightLevel(player);
+            if(actualLightLevel >= 0 && actualLightLevel < 2){
+                UV_U = 2/textureSize;
+                UV_V = 255/textureSize;
+            } else if (actualLightLevel >= 2 && actualLightLevel < 4) {
+                UV_U = 168/textureSize;
+                UV_V = 240/textureSize;
+            } else if (actualLightLevel >= 4 && actualLightLevel < 6) {
+                UV_U = 168/textureSize;
+                UV_V = 230/textureSize;
+            } else if (actualLightLevel >= 6 && actualLightLevel < 8) {
+                UV_U = 170/textureSize;
+                UV_V = 150/textureSize;
+            } else if (actualLightLevel >= 8 && actualLightLevel < 10) {
+                UV_U = 176/textureSize;
+                UV_V = 145/textureSize;
+            } else if (actualLightLevel >= 10 && actualLightLevel < 13) {
+                UV_U = 191/textureSize;
+                UV_V = 140/textureSize;
+            } else if (actualLightLevel >=13) {
+                UV_U = (191 / textureSize);
+                UV_V = (128 / textureSize);
+            }
+        } else if (player.isUnderWater()) { //If player in water.
+            UV_U = (30 / textureSize);
+            UV_V = (2 / textureSize);
         }
     }
 
@@ -89,7 +94,7 @@ public class RenderBlinkEffectScreen {
 
     //Rendering Manager
     public static void render(double screenDivider, int multiplier, boolean renderBelow, float transparency) {
-        checkUvToLightLevel();
+        checkUvToLightLevelOrWater();
         Player player = Minecraft.getInstance().player;
         screenWidth = mc.getWindow().getGuiScaledWidth();
         screenHeight = mc.getWindow().getGuiScaledHeight();
