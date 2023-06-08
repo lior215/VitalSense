@@ -14,7 +14,7 @@ public class ModCommonConfigs {
     public static final ForgeConfigSpec.ConfigValue<Boolean> ToggleBlinkRenderOnF1;
 
     static {
-        BUILDER.push("Configs for Tutorial Mod");
+        BUILDER.push("Common configs for VitalSense Mod");
 
         ToggleBlinkMechanic = BUILDER.comment("Toggle blink mechanic(true/false)")
                 .define("Enable/Disable", true);
@@ -32,9 +32,9 @@ public class ModCommonConfigs {
     public static void checkConfigs() {
         LOGGER.info("Common configs");
         String vital = "[VitalSenseMod]";
-        LOGGER.info(vital+" Blink Mechanic is: "+ToggleBlinkMechanic.get());
-        LOGGER.info(vital+" Blink Rendering during F1 is: "+ToggleBlinkMechanic.get());
-        LOGGER.info(vital+" Breathing Mechanic is: "+ToggleBlinkMechanic.get());
+        LOGGER.info(vital + " Blink Mechanic is: "+ ToggleBlinkMechanic.get());
+        LOGGER.info(vital + " Blink Rendering during F1 is: "+ ToggleBlinkMechanic.get());
+        LOGGER.info(vital + " Breathing Mechanic is: "+ ToggleBlinkMechanic.get());
 
     }
 }
