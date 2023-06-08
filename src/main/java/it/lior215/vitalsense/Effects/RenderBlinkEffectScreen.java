@@ -2,6 +2,7 @@ package it.lior215.vitalsense.Effects;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import it.lior215.vitalsense.Config.ModCommonConfigs;
 import it.lior215.vitalsense.DevUtils.LightLevelProvider;
 import it.lior215.vitalsense.Event.ModBlinkingEvents;
 import it.lior215.vitalsense.vitalsense;
@@ -55,22 +56,22 @@ public class RenderBlinkEffectScreen {
         float textureSize = 256;
         Player player = Minecraft.getInstance().player;
         assert player != null;
-        int actualLightLevel = lightLevelProvider.playerPoscheckDynamicLightLevel(player);
+        int actualLightLevel = lightLevelProvider.playerPosCheckDynamicLightLevel(player);
 
 
-        if(actualLightLevel >= 0 && actualLightLevel < 2){ //set
+        if(actualLightLevel >= 0 && actualLightLevel < 2){
             UV_U = 2/textureSize;
-            UV_V = 254/textureSize;
+            UV_V = 255/textureSize;
         } else if (actualLightLevel >= 2 && actualLightLevel < 4) {
             UV_U = 248/textureSize;
             UV_V = 210/textureSize;
         } else if (actualLightLevel >= 4 && actualLightLevel < 6) {
             UV_U = 248/textureSize;
             UV_V = 185/textureSize;
-        } else if (actualLightLevel >= 6 && actualLightLevel < 8) { //set
+        } else if (actualLightLevel >= 6 && actualLightLevel < 8) {
             UV_U = 253/textureSize;
             UV_V = 131/textureSize;
-        } else if (actualLightLevel >= 8 && actualLightLevel < 10) { //set
+        } else if (actualLightLevel >= 8 && actualLightLevel < 10) {
             UV_U = 248/textureSize;
             UV_V = 131/textureSize;
         } else if (actualLightLevel >= 10 && actualLightLevel < 13) {
@@ -88,7 +89,6 @@ public class RenderBlinkEffectScreen {
 
     //Rendering Manager
     public static void render(double screenDivider, int multiplier, boolean renderBelow, float transparency) {
-        checkCustomImage();
         checkUvToLightLevel();
         Player player = Minecraft.getInstance().player;
         screenWidth = mc.getWindow().getGuiScaledWidth();
@@ -142,7 +142,8 @@ public class RenderBlinkEffectScreen {
         @SubscribeEvent
         public static void onRenderTick(TickEvent.RenderTickEvent event) {
 
-            if (event.side.isClient() && event.phase == TickEvent.Phase.START && ModBlinkingEvents.getPlayerBlinking()) {
+            if (event.side.isClient() && event.phase == TickEvent.Phase.START && ModBlinkingEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
+                assert mc.player != null;
                 //Timer manager
                 if (Timer <= 0) {
                     Timer = 15;
@@ -169,8 +170,8 @@ public class RenderBlinkEffectScreen {
                     belowMultiplier++;
                 }
 
-                //If player has pressed F1 the render will not be hidden TODO: create config render during F1
-                if (ModBlinkingEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui) {
+                //If player has pressed F1 the render will not be hidden
+                if (ModBlinkingEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get()) {
                     render(screenDivider, multiplier, false, 1.0f);
 
                     if (Timer > 3 && Timer <=13) {
@@ -184,7 +185,7 @@ public class RenderBlinkEffectScreen {
         @SubscribeEvent
         public static void playerBlink(RenderGuiOverlayEvent.Post event) {
             Player player = Minecraft.getInstance().player;
-            if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingEvents.getPlayerBlinking()) {
+            if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
                 render(screenDivider, multiplier, false,1.0f);
 
                 if (Timer > 3 && Timer <=13) {
@@ -193,6 +194,5 @@ public class RenderBlinkEffectScreen {
             }
         }
     }
-
 }
 
