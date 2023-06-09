@@ -22,6 +22,7 @@ public class TimerProvider {
     public int getTimer() {
         return timer;
     }
+    public int getStartTimerValue() { return startTimerValue; }
     
     public void setTimer(int value) {
         timer = value;
