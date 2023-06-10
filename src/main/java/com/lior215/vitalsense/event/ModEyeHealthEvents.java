@@ -55,13 +55,32 @@ public class ModEyeHealthEvents {
                             eyeHealth.reduceHealthValue(2.5f);
                             event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
                         } else if (event.player.isEyeInFluidType(Fluids.LAVA.getFluidType())) {
-                            eyeHealth.reduceHealthValue(10f);
+                            eyeHealth.reduceHealthValue(25f);
+                            event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
                         }
                         timer.decreaseTimer();
                     });
                 } else {
                     timer.decreaseTimer();
                 }
+        }
+    }
+
+
+    public static void onPlayerEyeHealthValues(TickEvent.PlayerTickEvent event) {
+        if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
+            if (timer.getTimer() <= 0) {
+                timer.setTimerToStartValue();
+            } else if (timer.getTimer() == 1) {
+                event.player.getCapability(EyeHealthProvider.EyeHealth).ifPresent(eyeHealth -> {
+                    if(eyeHealth.getHealthValue() <= 50) {
+                        ModBlinkingTimerEvents.setBlinkCountdownTimer(37);
+                    } else if (eyeHealth.getHealthValue() > 50) {
+                        ModBlinkingTimerEvents.setBlinkCountdownTimer(75);
+                    }
+
+                });
+            }
         }
     }
 }

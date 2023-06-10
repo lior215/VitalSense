@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.lior215.vitalsense.config.ModCommonConfigs;
 import com.lior215.vitalsense.utils.LightLevelProvider;
-import com.lior215.vitalsense.event.ModBlinkingEvents;
+import com.lior215.vitalsense.event.ModBlinkingTimerEvents;
 import com.lior215.vitalsense.vitalsense;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -25,7 +25,7 @@ public class RenderBlinkEffectScreen {
     protected static int screenWidth;
     protected static int screenHeight;
     private static int multiplier = 1;
-    private static int belowMultiplier = 10; //A è 5 mentre B è 6
+    private static int belowMultiplier = 10;
     private static int Timer = 0;
     private static int screenDivider = 10;
     private static float UV_U;
@@ -95,7 +95,7 @@ public class RenderBlinkEffectScreen {
         PoseStack pose = RenderSystem.getModelViewStack();
         assert player != null;
 
-        if (ModBlinkingEvents.getPlayerBlinking()) {
+        if (ModBlinkingTimerEvents.getPlayerBlinking()) {
             pose.pushPose();
             RenderSystem.enableDepthTest();
             RenderSystem.depthMask(false);
@@ -139,7 +139,7 @@ public class RenderBlinkEffectScreen {
         @SubscribeEvent
         public static void onRenderTick(TickEvent.RenderTickEvent event) {
 
-            if (event.side.isClient() && event.phase == TickEvent.Phase.START && ModBlinkingEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
+            if (event.side.isClient() && event.phase == TickEvent.Phase.START && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
                 assert mc.player != null;
                 //Timer manager
                 if (Timer <= 0) {
@@ -147,8 +147,8 @@ public class RenderBlinkEffectScreen {
                     multiplier = 0;
                     belowMultiplier = 10;
 
-                    ModBlinkingEvents.setPlayerBlinking(false);
-                    ModBlinkingEvents.setCanStartBlinkingTimer(true);
+                    ModBlinkingTimerEvents.setPlayerBlinking(false);
+                    ModBlinkingTimerEvents.setCanStartBlinkingTimer(true);
                 } else {
                     Timer--;
                 }
@@ -168,7 +168,7 @@ public class RenderBlinkEffectScreen {
                 }
 
                 //If player has pressed F1 the render will not be hidden
-                if (ModBlinkingEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get()) {
+                if (ModBlinkingTimerEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get()) {
                     render(screenDivider, multiplier, false, 1.0f);
 
                     if (Timer > 3 && Timer <=13) {
@@ -182,7 +182,7 @@ public class RenderBlinkEffectScreen {
         @SubscribeEvent
         public static void playerBlink(RenderGuiOverlayEvent.Post event) {
             Player player = Minecraft.getInstance().player;
-            if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
+            if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
                 render(screenDivider, multiplier, false,1.0f);
 
                 if (Timer > 3 && Timer <=13) {
