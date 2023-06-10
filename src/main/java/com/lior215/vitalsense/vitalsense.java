@@ -29,11 +29,6 @@ public class vitalsense {
 
     public vitalsense() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-
-
-
-
         modEventBus.addListener(this::commonSetup);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ModClientConfigs.SPEC, "vitalsense-client-config.toml");

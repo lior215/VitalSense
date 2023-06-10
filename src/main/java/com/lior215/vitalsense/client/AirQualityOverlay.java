@@ -7,14 +7,11 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+
+import java.util.logging.Logger;
 
 public class AirQualityOverlay {
     private static final ResourceLocation AIR_QUALITY = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/air_quality.png");
@@ -31,7 +28,6 @@ public class AirQualityOverlay {
         if (player != null) {
             if (player.getMainHandItem().equals(new ItemStack(Items.AMETHYST_SHARD))) {
                 GuiComponent.blit(poseStack, x - 94, y - 54, 0, 0, 160, 16, 160, 16);
-                System.out.println("test");
             }
         }
     });
