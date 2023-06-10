@@ -34,10 +34,6 @@ public class RenderBlinkEffectScreen {
     private static ResourceLocation CUSTOM_IMG_LOCATION = null;
     private static ResourceLocation RENDERED_IMG_LOCATION;
 
-
-
-
-
     //Image Manager
     public static ResourceLocation setBlinkImage(String Mod_Id, String resourceLocation) { //for modders to use
         CUSTOM_IMG_LOCATION = new ResourceLocation(Mod_Id, resourceLocation);
@@ -45,7 +41,7 @@ public class RenderBlinkEffectScreen {
     }
 
     public static void checkCustomImage() {
-        if(CUSTOM_IMG_LOCATION == null) {
+        if (CUSTOM_IMG_LOCATION == null) {
             RENDERED_IMG_LOCATION = DEFAULT_IMG_LOCATION;
         } else {
             RENDERED_IMG_LOCATION = CUSTOM_IMG_LOCATION;
@@ -58,32 +54,29 @@ public class RenderBlinkEffectScreen {
         assert player != null;
         int actualLightLevel = lightLevelProvider.playerPosCheckDynamicLightLevel(player);
 
-        if(actualLightLevel >= 0 && actualLightLevel < 2){
-            UV_U = 2/textureSize;
-            UV_V = 255/textureSize;
+        if (actualLightLevel >= 0 && actualLightLevel < 2) {
+            UV_U = 2 / textureSize;
+            UV_V = 255 / textureSize;
         } else if (actualLightLevel >= 2 && actualLightLevel < 4) {
-            UV_U = 248/textureSize;
-            UV_V = 210/textureSize;
+            UV_U = 248 / textureSize;
+            UV_V = 210 / textureSize;
         } else if (actualLightLevel >= 4 && actualLightLevel < 6) {
-            UV_U = 248/textureSize;
-            UV_V = 185/textureSize;
+            UV_U = 248 / textureSize;
+            UV_V = 185 / textureSize;
         } else if (actualLightLevel >= 6 && actualLightLevel < 8) {
-            UV_U = 253/textureSize;
-            UV_V = 131/textureSize;
+            UV_U = 253 / textureSize;
+            UV_V = 131 / textureSize;
         } else if (actualLightLevel >= 8 && actualLightLevel < 10) {
-            UV_U = 248/textureSize;
-            UV_V = 131/textureSize;
+            UV_U = 248 / textureSize;
+            UV_V = 131 / textureSize;
         } else if (actualLightLevel >= 10 && actualLightLevel < 13) {
-            UV_U = 200/textureSize;
-            UV_V = 131/textureSize;
-        } else if (actualLightLevel >=13) {
+            UV_U = 200 / textureSize;
+            UV_V = 131 / textureSize;
+        } else if (actualLightLevel >= 13) {
             UV_U = (191 / textureSize);
             UV_V = (128 / textureSize);
         }
     }
-
-
-
 
 
     //Rendering Manager
@@ -129,10 +122,11 @@ public class RenderBlinkEffectScreen {
 
     public void renderGetUv() {
         assert mc.player != null;
-        mc.player.sendSystemMessage(Component.literal("U: "+UV_U+" V: "+UV_V));
+        mc.player.sendSystemMessage(Component.literal("U: " + UV_U + " V: " + UV_V));
     }
 
-    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)  //TODO: aggiungere un'effetto di accellerazione e aggiungere casistica se <0 allora 0
+    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    //TODO: aggiungere un'effetto di accellerazione e aggiungere casistica se <0 allora 0
     public static class RenderBlinkEventClass {
 
 
@@ -171,7 +165,7 @@ public class RenderBlinkEffectScreen {
                 if (ModBlinkingTimerEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get()) {
                     render(screenDivider, multiplier, false, 1.0f);
 
-                    if (Timer > 3 && Timer <=13) {
+                    if (Timer > 3 && Timer <= 13) {
                         render(screenDivider, belowMultiplier, true, 1.0f);
                     }
                 }
@@ -183,13 +177,12 @@ public class RenderBlinkEffectScreen {
         public static void playerBlink(RenderGuiOverlayEvent.Post event) {
             Player player = Minecraft.getInstance().player;
             if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
-                render(screenDivider, multiplier, false,1.0f);
+                render(screenDivider, multiplier, false, 1.0f);
 
-                if (Timer > 3 && Timer <=13) {
-                    render(screenDivider, belowMultiplier, true,1.0f);
+                if (Timer > 3 && Timer <= 13) {
+                    render(screenDivider, belowMultiplier, true, 1.0f);
                 }
             }
         }
     }
 }
-
