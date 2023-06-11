@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -17,6 +16,7 @@ import static com.lior215.vitalsense.vitalsense.LOGGER;
 public class AirQualityOverlay {
     private static final ResourceLocation AIR_QUALITY = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/air_quality.png");
     private static final ResourceLocation AIR_QUALITY_INDICATOR = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/quality_indicator.png");
+    public static int indicatorX = 0;
 
     public static final IGuiOverlay HUD_AIR = ((gui, poseStack, partialTick, width, height) -> {
         int x = width / 2;
@@ -39,10 +39,16 @@ public class AirQualityOverlay {
         int x = width / 2;
         int y = height;
 
+        Player player = Minecraft.getInstance().player;
+
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, AIR_QUALITY_INDICATOR);
-
-        GuiComponent.blit(poseStack, x, y - 54, 0, 0, 16, 16, 16, 16);
+        if (player != null && player.getInventory().contains(new ItemStack(Items.AMETHYST_SHARD))) {
+            GuiComponent.blit(poseStack, indicatorX, y - 54, 0, 0, 16, 16, 16, 16);
+            LOGGER.info("bliting the gui");
+        } else {
+            indicatorX = x;
+        }
     });
 }

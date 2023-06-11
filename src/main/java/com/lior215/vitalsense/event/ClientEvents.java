@@ -14,6 +14,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void registerGuiOverlay(RegisterGuiOverlaysEvent event) {
             event.registerAboveAll("air_quality", AirQualityOverlay.HUD_AIR);
+            event.registerAboveAll("quality_indicator", AirQualityOverlay.HUD_QUALITY_INDICATOR);
         }
     }
 }

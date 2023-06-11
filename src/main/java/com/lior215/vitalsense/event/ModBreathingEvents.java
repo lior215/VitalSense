@@ -7,6 +7,8 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import static com.lior215.vitalsense.client.AirQualityOverlay.indicatorX;
+
 @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, value = Dist.CLIENT)
 public class ModBreathingEvents {
 
@@ -15,8 +17,14 @@ public class ModBreathingEvents {
         Player player = event.player;
         if (event.phase == TickEvent.Phase.END) {
             if (player != null) {
-                if (player.getY() < 50 && !player.level.canSeeSky(player.getOnPos().offset(0,+1,0))) {
-
+                if (player.getY() < 50 && !player.level.canSeeSky(player.getOnPos().offset(0,1,0))) {
+                    if (indicatorX < 295) {
+                        indicatorX++;
+                    }
+                } else {
+                    if (indicatorX > 140) {
+                        indicatorX--;
+                    }
                 }
             }
         }
