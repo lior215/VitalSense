@@ -1,5 +1,6 @@
 package com.lior215.vitalsense.event;
 
+import com.lior215.vitalsense.client.BlinkHud;
 import com.lior215.vitalsense.utils.TimerProvider;
 import com.lior215.vitalsense.vitalsense;
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
@@ -42,6 +43,12 @@ public class ModEyeHealthEvents {
             });
         }
     }
+    @SubscribeEvent
+    public static void timerCountdown(TickEvent.PlayerTickEvent event) {
+        if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
+            timer.decreaseTimer();
+        }
+    }
 
 
     @SubscribeEvent
@@ -58,15 +65,12 @@ public class ModEyeHealthEvents {
                             eyeHealth.reduceHealthValue(25f);
                             event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
                         }
-                        timer.decreaseTimer();
                     });
-                } else {
-                    timer.decreaseTimer();
                 }
         }
     }
 
-
+    @SubscribeEvent
     public static void onPlayerEyeHealthValues(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
             if (timer.getTimer() <= 0) {
@@ -75,8 +79,10 @@ public class ModEyeHealthEvents {
                 event.player.getCapability(EyeHealthProvider.EyeHealth).ifPresent(eyeHealth -> {
                     if(eyeHealth.getHealthValue() <= 50) {
                         ModBlinkingTimerEvents.setBlinkCountdownTimer(37);
+                        BlinkHud.setShouldRenderFaster(true);
                     } else if (eyeHealth.getHealthValue() > 50) {
                         ModBlinkingTimerEvents.setBlinkCountdownTimer(75);
+                        BlinkHud.setShouldRenderFaster(false);
                     }
 
                 });
