@@ -1,5 +1,6 @@
 package com.lior215.vitalsense.capabilities;
 
+import com.lior215.vitalsense.vitalsense;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
@@ -44,13 +45,14 @@ public class EyeHealth {
     }
 
 
-    public void saveNBTData(CompoundTag nbt) { //crea il data NBT mettendo l'int all'interno
-        nbt.putFloat("EyeHealth", healthValue);
+    public void saveNBTData(CompoundTag nbt) {
+        nbt.putFloat("eyehealth", healthValue);
     }
 
 
-    public void loadNBTData(CompoundTag nbt) { //carica il data NBT prendendo l'int all'interno
-        nbt.getFloat("EyeHealth");
+    public void loadNBTData(CompoundTag nbt) {
+        vitalsense.LOGGER.info("loaded nbt data waju");
+        this.healthValue = nbt.getFloat("eyehealth");
     }
 
 

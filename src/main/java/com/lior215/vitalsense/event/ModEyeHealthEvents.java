@@ -1,11 +1,14 @@
 package com.lior215.vitalsense.event;
 
 import com.lior215.vitalsense.client.BlinkHud;
+import com.lior215.vitalsense.network.ModPackets;
+import com.lior215.vitalsense.network.S2CEyeHealth;
 import com.lior215.vitalsense.utils.TimerProvider;
 import com.lior215.vitalsense.vitalsense;
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.material.Fluids;
@@ -27,7 +30,7 @@ public class ModEyeHealthEvents {
     @SubscribeEvent
     public static void onAttachCapabilitiesPlayerEyeHealth(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player) {
-            if (!event.getObject().getCapability(EyeHealthProvider.EyeHealth).isPresent()) {
+            if (!event.getObject().getCapability(EyeHealthProvider.eHealth).isPresent()) {
                 event.addCapability(new ResourceLocation(vitalsense.MOD_ID, "eyehealthproperties"), new EyeHealthProvider());
             }
         }
@@ -36,13 +39,15 @@ public class ModEyeHealthEvents {
     @SubscribeEvent
     public static void onPlayerClonedEyeHealth(PlayerEvent.Clone event) { //when player dies reapply capability
         if (event.isWasDeath()) {
-            event.getOriginal().getCapability(EyeHealthProvider.EyeHealth).ifPresent(oldStore -> {
-                event.getEntity().getCapability(EyeHealthProvider.EyeHealth).ifPresent(newStore -> {
+            event.getOriginal().getCapability(EyeHealthProvider.eHealth).ifPresent(oldStore -> {
+                event.getEntity().getCapability(EyeHealthProvider.eHealth).ifPresent(newStore -> {
                     newStore.copyFrom(oldStore);
                 });
             });
         }
     }
+
+
     @SubscribeEvent
     public static void timerCountdown(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
@@ -57,7 +62,7 @@ public class ModEyeHealthEvents {
                 if (timer.getTimer() <= 0) {
                     timer.setTimerToStartValue();
                 } else if (timer.getTimer() == 1) {
-                    event.player.getCapability(EyeHealthProvider.EyeHealth).ifPresent(eyeHealth -> {
+                    event.player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> {
                         if (event.player.isEyeInFluidType(Fluids.WATER.getFluidType()) == true) {
                             eyeHealth.reduceHealthValue(2.5f);
                             event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
@@ -65,6 +70,7 @@ public class ModEyeHealthEvents {
                             eyeHealth.reduceHealthValue(25f);
                             event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
                         }
+                        ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) event.player);
                     });
                 }
         }
@@ -76,7 +82,7 @@ public class ModEyeHealthEvents {
             if (timer.getTimer() <= 0) {
                 timer.setTimerToStartValue();
             } else if (timer.getTimer() == 1) {
-                event.player.getCapability(EyeHealthProvider.EyeHealth).ifPresent(eyeHealth -> {
+                event.player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> {
                     if(eyeHealth.getHealthValue() <= 50) {
                         ModBlinkingTimerEvents.setBlinkCountdownTimer(37);
                         BlinkHud.setShouldRenderFaster(true);

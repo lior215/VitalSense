@@ -2,9 +2,7 @@ package com.lior215.vitalsense.commands;
 
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -20,7 +18,7 @@ public class EyeHealthSetCommand {
         }
     private int setEyeHealth (CommandSourceStack source, int value) {
         Player player = source.getPlayer();
-        player.getCapability(EyeHealthProvider.EyeHealth).ifPresent(eyeHealth -> eyeHealth.setHealthValue(value));
+        player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> eyeHealth.setHealthValue(value));
         source.sendSuccess(Component.literal("Your Eye health is now set to " + value), true);
         return value;
     }

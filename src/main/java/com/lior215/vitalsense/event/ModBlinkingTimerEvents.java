@@ -37,7 +37,7 @@ public class ModBlinkingTimerEvents {
                 if (blinkTimerToBlink.getTimer() <= 0) {
                     blinkTimerToBlink.setTimer(blinkCountdownTimer);
                 } else if (blinkTimerToBlink.getTimer() == 1) {
-                    event.player.sendSystemMessage(Component.literal("Start Blinked!"));
+                    //Debug: event.player.sendSystemMessage(Component.literal("Start Blinked!"));
                     playerBlinking = true;
                     canStartBlinkingTimer = false;
                 }

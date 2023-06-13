@@ -13,9 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class EyeHealthProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<EyeHealth> EyeHealth = CapabilityManager.get(new CapabilityToken<EyeHealth>() {});
+    public static Capability<EyeHealth> eHealth = CapabilityManager.get(new CapabilityToken<EyeHealth>() { });
 
-    public EyeHealth eyeHealth = null;
+    private EyeHealth eyeHealth = null;
 
 
     public final LazyOptional<EyeHealth> optional = LazyOptional.of(this::initializeEyeHealth);
@@ -34,7 +34,7 @@ public class EyeHealthProvider implements ICapabilityProvider, INBTSerializable<
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == EyeHealth) {
+        if(cap == eHealth) {
             return optional.cast();
         }
 
