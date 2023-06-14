@@ -22,6 +22,10 @@ public class ModBreathingEvents {
                     if (AirQuality.getAirQuality() < 180) {
                         AirQuality.setAirQuality(AirQuality.getAirQuality() + 1);
                     }
+                } else if (player.isUnderWater()) {
+                    if (AirQuality.getAirQuality() < 180) {
+                        AirQuality.setAirQuality(AirQuality.getAirQuality() + 2);
+                    }
                 } else {
                     if (AirQuality.getAirQuality() > 0) {
                         AirQuality.setAirQuality(AirQuality.getAirQuality() - 1);

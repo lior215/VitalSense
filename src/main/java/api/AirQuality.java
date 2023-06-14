@@ -3,17 +3,20 @@ package api;
 import net.minecraft.client.Minecraft;
 
 import static com.lior215.vitalsense.client.AirQualityOverlay.indicatorX;
-import static com.lior215.vitalsense.vitalsense.LOGGER;
 
 public class AirQuality {
-    public static int defaultIndicatorPos = Minecraft.getInstance().screen.width/2 - 94;
+    private static final int defaultIndicatorPos = Minecraft.getInstance().screen.width/2 - 94;
+    private static final int defaultMax = 140 + defaultIndicatorPos;
+
     public static void setAirQuality(int value) {
         indicatorX = value + defaultIndicatorPos;
-        LOGGER.info(String.valueOf(indicatorX));
-        LOGGER.info(String.valueOf(value));
     }
 
     public static int getAirQuality() {
         return indicatorX - defaultIndicatorPos;
+    }
+
+    public static int getMaxAirQuality() {
+        return defaultMax;
     }
 }
