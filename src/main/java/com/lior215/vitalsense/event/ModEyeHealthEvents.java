@@ -83,12 +83,15 @@ public class ModEyeHealthEvents {
                 timer.setTimerToStartValue();
             } else if (timer.getTimer() == 1) {
                 event.player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> {
-                    if(eyeHealth.getHealthValue() <= 50) {
+                    if(eyeHealth.getHealthValue() <= 25) {
+                        ModBlinkingTimerEvents.setBlinkCountdownTimer(15);
+                        BlinkHud.setShouldRenderFaster(true, 2);
+                    } else if (eyeHealth.getHealthValue() > 25 && eyeHealth.getHealthValue() <= 50) {
                         ModBlinkingTimerEvents.setBlinkCountdownTimer(37);
-                        BlinkHud.setShouldRenderFaster(true);
+                        BlinkHud.setShouldRenderFaster(true, 1);
                     } else if (eyeHealth.getHealthValue() > 50) {
                         ModBlinkingTimerEvents.setBlinkCountdownTimer(75);
-                        BlinkHud.setShouldRenderFaster(false);
+                        BlinkHud.setShouldRenderFaster(false, 0);
                     }
 
                 });

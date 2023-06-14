@@ -17,61 +17,95 @@ public class BlinkHud {
     private static int xRenderEnd;
     private static int yRenderEnd;
     private static boolean shouldRenderFaster = false;
-    public static void setShouldRenderFaster(boolean renderFaster) {
+    private static int severity = 0;
+    public static void setShouldRenderFaster(boolean renderFaster, int setSeverity) {
         shouldRenderFaster = renderFaster;
+        severity = setSeverity;
     }
 
 
     public static boolean checkImageBasedOnBlinkTimerAndStatus() {
-        if(!shouldRenderFaster) {
-            if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 51 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 75) {
+        int phase1 = ModBlinkingTimerEvents.blinkTimerToBlink.getTimer()/1;
+        int phase2 = ModBlinkingTimerEvents.blinkTimerToBlink.getTimer()/2;
+        int phase3 = ModBlinkingTimerEvents.blinkTimerToBlink.getTimer()/3;
+        int phase4 = ModBlinkingTimerEvents.blinkTimerToBlink.getTimer()/4;
+
+        if (!shouldRenderFaster) {
+            if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 51 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 75) {
                 xRenderOrigin = 6;
                 yRenderOrigin = 2;
                 xRenderEnd = 22;
                 yRenderEnd = 13;
-            } else if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 33 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 51) {
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 33 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 51) {
                 xRenderOrigin = 23;
                 yRenderOrigin = 2;
                 xRenderEnd = 39;
                 yRenderEnd = 13;
-            } else if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 15 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 33) {
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 15 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 33) {
                 xRenderOrigin = 40;
                 yRenderOrigin = 2;
                 xRenderEnd = 56;
                 yRenderEnd = 13;
-            } else if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 2 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 15) {
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 2 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 15) {
                 xRenderOrigin = 57;
                 yRenderOrigin = 2;
                 xRenderEnd = 73;
                 yRenderEnd = 13;
-            } else if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() >= 0 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 2) {
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() >= 0 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 2) {
                 xRenderOrigin = 6;
                 yRenderOrigin = 2;
                 xRenderEnd = 22;
                 yRenderEnd = 13;
             }
-        } else {
-            if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 28 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 37) {
+        } else if (shouldRenderFaster && severity == 1) {
+            if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 28 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 37) {
                 xRenderOrigin = 6;
                 yRenderOrigin = 2;
                 xRenderEnd = 22;
                 yRenderEnd = 13;
-            } else if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 19 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 28) {
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 19 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 28) {
                 xRenderOrigin = 23;
                 yRenderOrigin = 2;
                 xRenderEnd = 39;
                 yRenderEnd = 13;
-            } else if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 10 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 19) {
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 10 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 19) {
                 xRenderOrigin = 40;
                 yRenderOrigin = 2;
                 xRenderEnd = 56;
                 yRenderEnd = 13;
-            } else if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 1 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 10) {
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 1 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 10) {
                 xRenderOrigin = 57;
                 yRenderOrigin = 2;
                 xRenderEnd = 73;
                 yRenderEnd = 13;
-            } else if(ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() >= 0 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 1) {
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() >= 0 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 1) {
+                xRenderOrigin = 6;
+                yRenderOrigin = 2;
+                xRenderEnd = 22;
+                yRenderEnd = 13;
+            }
+        } else if (shouldRenderFaster && severity == 2) {
+            if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 12 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 15) {
+                xRenderOrigin = 6;
+                yRenderOrigin = 2;
+                xRenderEnd = 22;
+                yRenderEnd = 13;
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 9 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 12) {
+                xRenderOrigin = 23;
+                yRenderOrigin = 2;
+                xRenderEnd = 39;
+                yRenderEnd = 13;
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 6 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 9) {
+                xRenderOrigin = 40;
+                yRenderOrigin = 2;
+                xRenderEnd = 56;
+                yRenderEnd = 13;
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > 3 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 6) {
+                xRenderOrigin = 57;
+                yRenderOrigin = 2;
+                xRenderEnd = 73;
+                yRenderEnd = 13;
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() >= 0 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 3) {
                 xRenderOrigin = 6;
                 yRenderOrigin = 2;
                 xRenderEnd = 22;

@@ -30,6 +30,10 @@ public class TimerProvider {
         timer -= 1;
     }
 
+    public void decreaseTimerWithValue(int value) {
+        timer -= value;
+    }
+
     public void setTimerToStartValue() {
         timer = startTimerValue;
     }
