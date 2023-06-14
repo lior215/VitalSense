@@ -1,5 +1,6 @@
 package com.lior215.vitalsense.event;
 
+import api.AirQuality;
 import com.lior215.vitalsense.vitalsense;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,12 +19,12 @@ public class ModBreathingEvents {
         if (event.phase == TickEvent.Phase.END) {
             if (player != null) {
                 if (player.getY() < 50 && !player.level.canSeeSky(player.getOnPos().offset(0,1,0))) {
-                    if (indicatorX < 295) {
-                        indicatorX++;
+                    if (AirQuality.getAirQuality() < 180) {
+                        AirQuality.setAirQuality(AirQuality.getAirQuality() + 1);
                     }
                 } else {
-                    if (indicatorX > 140) {
-                        indicatorX--;
+                    if (AirQuality.getAirQuality() > 0) {
+                        AirQuality.setAirQuality(AirQuality.getAirQuality() - 1);
                     }
                 }
             }
