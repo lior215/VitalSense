@@ -14,7 +14,6 @@ import org.jetbrains.annotations.Nullable;
 public class EyeHealthProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
     public static Capability<EyeHealth> eHealth = CapabilityManager.get(new CapabilityToken<EyeHealth>() { });
-
     private EyeHealth eyeHealth = null;
 
 

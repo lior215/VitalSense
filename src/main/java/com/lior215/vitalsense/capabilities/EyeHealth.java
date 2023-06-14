@@ -35,11 +35,6 @@ public class EyeHealth {
     }
 
 
-
-
-
-
-
     public void copyFrom(EyeHealth source) {
         this.healthValue = source.healthValue;
     }
@@ -54,10 +49,6 @@ public class EyeHealth {
         vitalsense.LOGGER.info("loaded nbt data waju");
         this.healthValue = nbt.getFloat("eyehealth");
     }
-
-
-
-
 
 
 }

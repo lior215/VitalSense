@@ -6,7 +6,7 @@ import static com.lior215.vitalsense.client.AirQualityOverlay.indicatorX;
 
 public class AirQuality {
     private static final int defaultIndicatorPos = Minecraft.getInstance().screen.width/2 - 94;
-    private static final int defaultMax = 140 + defaultIndicatorPos;
+    private static final int defaultMax = 180;
 
     public static void setAirQuality(int value) {
         indicatorX = value + defaultIndicatorPos;

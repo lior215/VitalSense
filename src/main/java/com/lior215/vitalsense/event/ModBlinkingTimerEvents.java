@@ -2,7 +2,6 @@ package com.lior215.vitalsense.event;
 
 import com.lior215.vitalsense.utils.TimerProvider;
 import com.lior215.vitalsense.vitalsense;
-import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,15 +19,19 @@ public class ModBlinkingTimerEvents {
     public static int getBlinkCountdownTimer() {
         return blinkCountdownTimer;
     }
+
     public static void setCanStartBlinkingTimer(boolean value) {
         canStartBlinkingTimer = value;
     }
+
     public static boolean getPlayerBlinking() {
         return playerBlinking;
     }
+
     public static void setPlayerBlinking(boolean value) {
         playerBlinking = value;
     }
+
     public static void setBlinkCountdownTimer(int value) {
         blinkCountdownTimer = value;
     }
@@ -37,15 +40,15 @@ public class ModBlinkingTimerEvents {
     public static void onPlayerTickBlink(TickEvent.PlayerTickEvent event) {
 
         if (event.side.isClient() && event.phase == TickEvent.Phase.START && canStartBlinkingTimer) {
-                if (blinkTimerToBlink.getTimer() <= 0) {
-                    blinkTimerToBlink.setTimer(blinkCountdownTimer);
-                } else if (blinkTimerToBlink.getTimer() == 1) {
-                    //Debug: event.player.sendSystemMessage(Component.literal("Start Blinked!"));
-                    playerBlinking = true;
-                    canStartBlinkingTimer = false;
-                }
-                blinkTimerToBlink.decreaseTimer();
-                //Debug: blinkTimerToBlink.printTimerInChat("BlinkEvent", event.player);
+            if (blinkTimerToBlink.getTimer() <= 0) {
+                blinkTimerToBlink.setTimer(blinkCountdownTimer);
+            } else if (blinkTimerToBlink.getTimer() == 1) {
+                //Debug: event.player.sendSystemMessage(Component.literal("Start Blinked!"));
+                playerBlinking = true;
+                canStartBlinkingTimer = false;
+            }
+            blinkTimerToBlink.decreaseTimer();
+            //Debug: blinkTimerToBlink.printTimerInChat("BlinkEvent", event.player);
         }
 
     }

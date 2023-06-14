@@ -23,8 +23,16 @@ public class ModBreathingEvents {
                         AirQuality.setAirQuality(AirQuality.getAirQuality() + 1);
                     }
                 } else if (player.isUnderWater()) {
-                    if (AirQuality.getAirQuality() < 180) {
+                    if (AirQuality.getAirQuality() < AirQuality.getMaxAirQuality()) {
                         AirQuality.setAirQuality(AirQuality.getAirQuality() + 2);
+                    }
+                } else if (player.isInLava()) {
+                    if (AirQuality.getAirQuality() < AirQuality.getMaxAirQuality()) {
+                        AirQuality.setAirQuality(AirQuality.getAirQuality() + 10);
+                    }
+                } else if (player.getY() > 150) {
+                    if (AirQuality.getAirQuality() < AirQuality.getMaxAirQuality()) {
+                        AirQuality.setAirQuality(AirQuality.getAirQuality() + 1);
                     }
                 } else {
                     if (AirQuality.getAirQuality() > 0) {
