@@ -1,6 +1,7 @@
 package com.lior215.vitalsense;
 
 import com.lior215.vitalsense.effects.RenderBlinkEffectScreen;
+import com.lior215.vitalsense.network.ModPackets;
 import com.mojang.logging.LogUtils;
 import com.lior215.vitalsense.config.ModClientConfigs;
 import com.lior215.vitalsense.config.ModCommonConfigs;
@@ -39,6 +40,7 @@ public class vitalsense {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         ModCommonConfigs.checkConfigs();
+        ModPackets.register();
     }
 
     @SubscribeEvent

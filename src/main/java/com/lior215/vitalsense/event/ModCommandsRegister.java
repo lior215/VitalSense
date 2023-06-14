@@ -1,6 +1,7 @@
 package com.lior215.vitalsense.event;
 
 
+import com.lior215.vitalsense.commands.EyeHealthInfo;
 import com.lior215.vitalsense.commands.EyeHealthSetCommand;
 import com.lior215.vitalsense.vitalsense;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -15,6 +16,7 @@ public class ModCommandsRegister {
     @SubscribeEvent
     public static void onCommandRegister(RegisterCommandsEvent event) {
         new EyeHealthSetCommand(event.getDispatcher());
+        new EyeHealthInfo(event.getDispatcher());
 
         ConfigCommand.register(event.getDispatcher());
     }

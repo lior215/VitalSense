@@ -11,12 +11,15 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, value = Dist.CLIENT)
 public class ModBlinkingTimerEvents {
 
-    private static TimerProvider timer = new TimerProvider(75);
+    public static TimerProvider blinkTimerToBlink = new TimerProvider(75);
 
     private static boolean playerBlinking = true;
     private static boolean canStartBlinkingTimer = false;
-    private static int blinkCountdownTimer = timer.getStartTimerValue();
+    private static int blinkCountdownTimer = blinkTimerToBlink.getStartTimerValue();
 
+    public static int getBlinkCountdownTimer() {
+        return blinkCountdownTimer;
+    }
     public static void setCanStartBlinkingTimer(boolean value) {
         canStartBlinkingTimer = value;
     }
@@ -34,15 +37,15 @@ public class ModBlinkingTimerEvents {
     public static void onPlayerTickBlink(TickEvent.PlayerTickEvent event) {
 
         if (event.side.isClient() && event.phase == TickEvent.Phase.START && canStartBlinkingTimer) {
-                if (timer.getTimer() <= 0) {
-                    timer.setTimer(blinkCountdownTimer);
-                } else if (timer.getTimer() == 1) {
-                    event.player.sendSystemMessage(Component.literal("Start Blinked!"));
+                if (blinkTimerToBlink.getTimer() <= 0) {
+                    blinkTimerToBlink.setTimer(blinkCountdownTimer);
+                } else if (blinkTimerToBlink.getTimer() == 1) {
+                    //Debug: event.player.sendSystemMessage(Component.literal("Start Blinked!"));
                     playerBlinking = true;
                     canStartBlinkingTimer = false;
                 }
-                timer.decreaseTimer();
-                //Debug:timer.printTimerInChat("BlinkEvent", event.player);
+                blinkTimerToBlink.decreaseTimer();
+                //Debug: blinkTimerToBlink.printTimerInChat("BlinkEvent", event.player);
         }
 
     }

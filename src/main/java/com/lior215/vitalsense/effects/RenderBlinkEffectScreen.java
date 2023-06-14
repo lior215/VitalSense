@@ -1,5 +1,6 @@
 package com.lior215.vitalsense.effects;
 
+import com.lior215.vitalsense.utils.TimerProvider;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.lior215.vitalsense.config.ModCommonConfigs;
@@ -20,14 +21,14 @@ import net.minecraftforge.fml.common.Mod;
 
 public class RenderBlinkEffectScreen {
 
+    static TimerProvider Timer = new TimerProvider(15);
     private static LightLevelProvider lightLevelProvider = new LightLevelProvider();
     static Minecraft mc = Minecraft.getInstance();
     protected static int screenWidth;
     protected static int screenHeight;
     private static int multiplier = 1;
     private static int belowMultiplier = 10;
-    private static int Timer = 0;
-    private static int screenDivider = 10;
+    private static final int screenDivider = 10;
     private static float UV_U;
     private static float UV_V;
     private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/blink_colormap.png");
@@ -129,35 +130,32 @@ public class RenderBlinkEffectScreen {
     //TODO: aggiungere un'effetto di accellerazione e aggiungere casistica se <0 allora 0
     public static class RenderBlinkEventClass {
 
-
         @SubscribeEvent
-        public static void onRenderTick(TickEvent.RenderTickEvent event) {
+        public static void onRenderTick(TickEvent.PlayerTickEvent event) {
 
-            if (event.side.isClient() && event.phase == TickEvent.Phase.START && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
+            if (event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
                 assert mc.player != null;
                 //Timer manager
-                if (Timer <= 0) {
-                    Timer = 15;
+                if (Timer.getTimer() <= 0) {
+                    Timer.setTimerToStartValue();
                     multiplier = 0;
                     belowMultiplier = 10;
 
                     ModBlinkingTimerEvents.setPlayerBlinking(false);
                     ModBlinkingTimerEvents.setCanStartBlinkingTimer(true);
-                } else {
-                    Timer--;
                 }
 
                 //RenderUpper manager
-                if (Timer > 8 && Timer <= 15) {
+                if (Timer.getTimer() > 8 && Timer.getTimer() <= 15) {
                     multiplier++;
-                } else if (Timer > 0 && Timer <= 8) {
+                } else if (Timer.getTimer() > 0 && Timer.getTimer() <= 8) {
                     multiplier--;
                 }
 
                 //RenderBelow manager
-                if (Timer > 8 && Timer <= 13) {
+                if (Timer.getTimer() > 8 && Timer.getTimer() <= 13) {
                     belowMultiplier--;
-                } else if (Timer > 3 && Timer <= 8) {
+                } else if (Timer.getTimer() > 3 && Timer.getTimer() <= 8) {
                     belowMultiplier++;
                 }
 
@@ -165,10 +163,11 @@ public class RenderBlinkEffectScreen {
                 if (ModBlinkingTimerEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get()) {
                     render(screenDivider, multiplier, false, 1.0f);
 
-                    if (Timer > 3 && Timer <= 13) {
+                    if (Timer.getTimer() > 3 && Timer.getTimer() <= 13) {
                         render(screenDivider, belowMultiplier, true, 1.0f);
                     }
                 }
+                Timer.decreaseTimer();
             }
 
         }
@@ -179,7 +178,7 @@ public class RenderBlinkEffectScreen {
             if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
                 render(screenDivider, multiplier, false, 1.0f);
 
-                if (Timer > 3 && Timer <= 13) {
+                if (Timer.getTimer() > 3 && Timer.getTimer() <= 13) {
                     render(screenDivider, belowMultiplier, true, 1.0f);
                 }
             }
