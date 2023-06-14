@@ -17,6 +17,9 @@ public class ModBlinkingTimerEvents {
     private static boolean canStartBlinkingTimer = false;
     private static int blinkCountdownTimer = blinkTimerToBlink.getStartTimerValue();
 
+    public static int getBlinkCountdownTimer() {
+        return blinkCountdownTimer;
+    }
     public static void setCanStartBlinkingTimer(boolean value) {
         canStartBlinkingTimer = value;
     }
