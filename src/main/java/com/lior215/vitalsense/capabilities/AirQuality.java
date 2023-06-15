@@ -1,6 +1,5 @@
 package com.lior215.vitalsense.capabilities;
 
-import com.lior215.vitalsense.vitalsense;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
@@ -31,10 +30,8 @@ public class AirQuality {
         nbt.putInt("air_quality", airQuality);
     }
 
-
     public void loadNBTData(CompoundTag nbt) {
         LOGGER.info("loaded nbt data for air quality");
         this.airQuality = nbt.getInt("air_quality");
     }
-
 }

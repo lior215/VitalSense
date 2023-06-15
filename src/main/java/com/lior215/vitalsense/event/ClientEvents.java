@@ -3,13 +3,8 @@ package com.lior215.vitalsense.event;
 import com.lior215.vitalsense.client.AirQualityOverlay;
 import com.lior215.vitalsense.client.BlinkHud;
 import com.lior215.vitalsense.vitalsense;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
