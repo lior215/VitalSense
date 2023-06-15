@@ -3,6 +3,7 @@ package com.lior215.vitalsense;
 import com.lior215.vitalsense.config.ModClientConfigs;
 import com.lior215.vitalsense.config.ModCommonConfigs;
 import com.lior215.vitalsense.effects.RenderBlinkEffectScreen;
+import com.lior215.vitalsense.items.ModItems;
 import com.lior215.vitalsense.network.ModPackets;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,6 +35,8 @@ public class vitalsense {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ModClientConfigs.SPEC, "vitalsense-client-config.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModCommonConfigs.SPEC, "vitalsense-common-config.toml");
+
+        ModItems.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

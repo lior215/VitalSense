@@ -58,20 +58,20 @@ public class ModEyeHealthEvents {
     @SubscribeEvent
     public static void onPlayerUnderWaterEyeDamage(TickEvent.PlayerTickEvent event) {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
-                if (timer.getTimer() <= 0) {
-                    timer.setTimerToStartValue();
-                } else if (timer.getTimer() == 1) {
-                    event.player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> {
-                        if (event.player.isEyeInFluidType(Fluids.WATER.getFluidType()) == true) {
-                            eyeHealth.reduceHealthValue(2.5f);
-                            event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
-                        } else if (event.player.isEyeInFluidType(Fluids.LAVA.getFluidType())) {
-                            eyeHealth.reduceHealthValue(25f);
-                            event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
-                        }
-                        ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) event.player);
-                    });
-                }
+            if (timer.getTimer() <= 0) {
+                timer.setTimerToStartValue();
+            } else if (timer.getTimer() == 1) {
+                event.player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> {
+                    if (event.player.isEyeInFluidType(Fluids.WATER.getFluidType()) == true) {
+                        eyeHealth.reduceHealthValue(2.5f);
+                        event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
+                    } else if (event.player.isEyeInFluidType(Fluids.LAVA.getFluidType())) {
+                        eyeHealth.reduceHealthValue(25f);
+                        event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
+                    }
+                    ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) event.player);
+                });
+            }
         }
     }
 
@@ -82,7 +82,7 @@ public class ModEyeHealthEvents {
                 timer.setTimerToStartValue();
             } else if (timer.getTimer() == 1) {
                 event.player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> {
-                    if(eyeHealth.getHealthValue() <= 25) {
+                    if (eyeHealth.getHealthValue() <= 25) {
                         ModBlinkingTimerEvents.setBlinkCountdownTimer(15);
                     } else if (eyeHealth.getHealthValue() > 25 && eyeHealth.getHealthValue() <= 50) {
                         ModBlinkingTimerEvents.setBlinkCountdownTimer(37);
