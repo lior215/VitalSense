@@ -1,8 +1,7 @@
 package com.lior215.vitalsense.event;
 
-import com.lior215.vitalsense.client.BlinkHud;
 import com.lior215.vitalsense.network.ModPackets;
-import com.lior215.vitalsense.network.S2CEyeHealth;
+import com.lior215.vitalsense.network.packets.S2CEyeHealth;
 import com.lior215.vitalsense.utils.TimerProvider;
 import com.lior215.vitalsense.vitalsense;
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
@@ -66,11 +65,13 @@ public class ModEyeHealthEvents {
                         if (event.player.isEyeInFluidType(Fluids.WATER.getFluidType()) == true) {
                             eyeHealth.reduceHealthValue(2.5f);
                             event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
+                            ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) event.player);
                         } else if (event.player.isEyeInFluidType(Fluids.LAVA.getFluidType())) {
                             eyeHealth.reduceHealthValue(25f);
                             event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
+                            ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) event.player);
                         }
-                        ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) event.player);
+
                     });
                 }
         }

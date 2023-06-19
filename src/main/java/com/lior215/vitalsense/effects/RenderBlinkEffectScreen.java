@@ -19,9 +19,13 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.lang.reflect.Field;
+
 public class RenderBlinkEffectScreen {
 
     static TimerProvider Timer = new TimerProvider(15);
+    static int renderdelay = 100;
+    static boolean skipDelay = false;
     private static LightLevelProvider lightLevelProvider = new LightLevelProvider();
     static Minecraft mc = Minecraft.getInstance();
     protected static int screenWidth;
@@ -34,6 +38,10 @@ public class RenderBlinkEffectScreen {
     private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/blink_colormap.png");
     private static ResourceLocation CUSTOM_IMG_LOCATION = null;
     private static ResourceLocation RENDERED_IMG_LOCATION;
+
+    public static void setSkipDelay(boolean toggle) {
+        skipDelay = toggle;
+    }
 
     //Image Manager
     public static ResourceLocation setBlinkImage(String Mod_Id, String resourceLocation) { //for modders to use
@@ -126,16 +134,38 @@ public class RenderBlinkEffectScreen {
         mc.player.sendSystemMessage(Component.literal("U: " + UV_U + " V: " + UV_V));
     }
 
+    //static int fps = Minecraft.getInstance().getWindow().getRefreshRate(); //check
+
+
+
+
     @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-    //TODO: aggiungere un'effetto di accellerazione e aggiungere casistica se <0 allora 0
+    //TODO: make so the blink render is faster
     public static class RenderBlinkEventClass {
+        public static void checkForFps() throws NoSuchFieldException, IllegalAccessException {
+            Field fps = Minecraft.class.getDeclaredField("fps");
+            fps.setAccessible(true);
+            if(fps.getInt(fps) <= 20) {
+                skipDelay = true;
+            } else if (fps.getInt(fps) > 20 && fps.getInt(fps) <= 40) {
+                skipDelay = true;
+            }else if (fps.getInt(fps) >=100) {
+                renderdelay = fps.getInt(fps) / 20;
+                skipDelay = false;
+            } else {
+                renderdelay = 3;
+                skipDelay = false;
+            }
+            //assert Minecraft.getInstance().player != null;
+            //Minecraft.getInstance().player.sendSystemMessage(Component.literal("fps: "+fps + " delay: "+renderdelay + " skip "+skipDelay));
+        }
 
         @SubscribeEvent
-        public static void onRenderTick(TickEvent.PlayerTickEvent event) {
-
-            if (event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
+        public static void onRenderTick(TickEvent.RenderTickEvent event) throws NoSuchFieldException, IllegalAccessException {
+            if (event.type == TickEvent.Type.RENDER && event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
+                if (renderdelay == 1 || skipDelay == true) {
                 assert mc.player != null;
-                //Timer manager
+                // Timer manager
                 if (Timer.getTimer() <= 0) {
                     Timer.setTimerToStartValue();
                     multiplier = 0;
@@ -145,21 +175,21 @@ public class RenderBlinkEffectScreen {
                     ModBlinkingTimerEvents.setCanStartBlinkingTimer(true);
                 }
 
-                //RenderUpper manager
+                // RenderUpper manager
                 if (Timer.getTimer() > 8 && Timer.getTimer() <= 15) {
                     multiplier++;
                 } else if (Timer.getTimer() > 0 && Timer.getTimer() <= 8) {
                     multiplier--;
                 }
 
-                //RenderBelow manager
+                // RenderBelow manager
                 if (Timer.getTimer() > 8 && Timer.getTimer() <= 13) {
                     belowMultiplier--;
                 } else if (Timer.getTimer() > 3 && Timer.getTimer() <= 8) {
                     belowMultiplier++;
                 }
 
-                //If player has pressed F1 the render will not be hidden
+                // If the player has pressed F1, the render will not be hidden
                 if (ModBlinkingTimerEvents.getPlayerBlinking() && Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get()) {
                     render(screenDivider, multiplier, false, 1.0f);
 
@@ -168,13 +198,18 @@ public class RenderBlinkEffectScreen {
                     }
                 }
                 Timer.decreaseTimer();
+                } else if (renderdelay == 0) {
+                    checkForFps();
+                }
+                if (skipDelay) {
+                    checkForFps();
+                }
+                renderdelay--;
             }
-
         }
 
         @SubscribeEvent
         public static void playerBlink(RenderGuiOverlayEvent.Post event) {
-            Player player = Minecraft.getInstance().player;
             if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
                 render(screenDivider, multiplier, false, 1.0f);
 

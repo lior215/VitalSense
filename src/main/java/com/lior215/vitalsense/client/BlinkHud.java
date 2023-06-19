@@ -20,10 +20,11 @@ public class BlinkHud {
 
 
     public static boolean checkImageBasedOnBlinkTimerAndStatus() {
-        int phase1 = ModBlinkingTimerEvents.getBlinkCountdownTimer();
-        int phase2 = ModBlinkingTimerEvents.getBlinkCountdownTimer()/2;
-        int phase3 = ModBlinkingTimerEvents.getBlinkCountdownTimer()/3;
-        int phase4 = ModBlinkingTimerEvents.getBlinkCountdownTimer()/4;
+        float divider = ModBlinkingTimerEvents.getBlinkCountdownTimer()/4;
+        float phase1 = divider * 4;
+        float phase2 = divider * 3;
+        float phase3 = divider * 2;
+        float phase4 = divider * 1;
 
             if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() > phase2 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= phase1) {
                 xRenderOrigin = 6;

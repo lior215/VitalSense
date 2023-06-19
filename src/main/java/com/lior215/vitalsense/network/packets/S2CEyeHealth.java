@@ -1,6 +1,7 @@
-package com.lior215.vitalsense.network;
+package com.lior215.vitalsense.network.packets;
 
 import com.lior215.vitalsense.client.ClientEyeHealth;
+import com.lior215.vitalsense.vitalsense;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 

@@ -1,5 +1,6 @@
 package com.lior215.vitalsense.network;
 
+import com.lior215.vitalsense.network.packets.S2CEyeHealth;
 import com.lior215.vitalsense.vitalsense;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
