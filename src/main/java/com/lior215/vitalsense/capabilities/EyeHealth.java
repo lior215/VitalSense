@@ -36,11 +36,6 @@ public class EyeHealth {
     }
 
 
-
-
-
-
-
     public void copyFrom(EyeHealth source) {
         this.healthValue = source.healthValue;
     }
@@ -56,10 +51,6 @@ public class EyeHealth {
         this.healthValue = nbt.getFloat("eyehealth");
         ClientEyeHealth.set(nbt.getFloat("eyehealth"));
     }
-
-
-
-
 
 
 }

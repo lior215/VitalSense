@@ -9,14 +9,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.minecraftforge.fml.common.Mod;
 
 import static com.lior215.vitalsense.vitalsense.LOGGER;
 
+@Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, value = Dist.CLIENT)
 public class AirQualityOverlay {
     private static final ResourceLocation AIR_QUALITY = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/air_quality.png");
     private static final ResourceLocation AIR_QUALITY_INDICATOR = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/quality_indicator.png");
-    public static int indicatorX = 0;
+    public static int indicatorX;
 
     public static final IGuiOverlay HUD_AIR = ((gui, poseStack, partialTick, width, height) -> {
         int x = width / 2;
@@ -47,8 +50,6 @@ public class AirQualityOverlay {
         if (player != null && player.getInventory().contains(new ItemStack(Items.AMETHYST_SHARD))) {
             GuiComponent.blit(poseStack, indicatorX, y - 54, 0, 0, 16, 16, 16, 16);
             LOGGER.info("bliting the gui");
-        } else {
-            indicatorX = x;
         }
     });
 }
