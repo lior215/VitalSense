@@ -24,6 +24,8 @@ public class EyeGui extends Screen {
     int y = Minecraft.getInstance().getWindow().getGuiScaledHeight();
     private boolean ButtonsRendered = false;
 
+    ImageButton closebutton = new ImageButton((int) ((x + 9 ) / 2.25f), (int) ((y + 19) / 2.25), 66, 15, 151, 199, 16, TEXTURE_RENDER_GUI, 256, 256, this::close);
+
 
 
     private static final ResourceLocation TEXTURE_RENDER_GUI = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/eyestatsgui.png");
@@ -38,39 +40,55 @@ public class EyeGui extends Screen {
         int yRenderOrigin = 0;
         int xRenderEnd = 174;
         int yRenderEnd = 135;
+        int Xscaler = 173 / 100 * 25;
+        int Yscaler = 150 / 100 * 25;
 
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE_RENDER_GUI);
 
-
-        blit(poseStack, (x - 173) / 2, (y - 150) / 2, xRenderOrigin, yRenderOrigin, xRenderEnd - xRenderOrigin, yRenderEnd - yRenderOrigin, 256, 256);
+        poseStack.pushPose();
+        poseStack.scale(1.25f,1.25f,1);
+        blit(poseStack, (int) ((x - 173) / 2.75f), (int) ((y - 150) / 2.75f), xRenderOrigin, yRenderOrigin, xRenderEnd - xRenderOrigin, yRenderEnd - yRenderOrigin, 256, 256);
         //default mc color text: 4210752
 
         //extras
-        //addButtonsToGui();
         eyeStatusToImage(poseStack);
-        addTextToGui(poseStack);
+        poseStack.popPose();
+
+
 
         //title
         poseStack.pushPose();
-        poseStack.scale(0.75f, 0.75f, 1.0f);
-        font.draw(poseStack, Component.translatable("vitalsense.gui.eyestatsgui").setStyle(Style.EMPTY.withColor(4210752)), (float) (x + 150) / 2, (float) (y - 78) / 2, 1);
+        poseStack.scale(0.85f, 0.85f, 1.0f);
+        font.draw(poseStack, Component.translatable("vitalsense.gui.eyestatsgui").setStyle(Style.EMPTY.withColor(100)), (float) (x - 1) / 1.85f, (float) (y - 145) / 1.85f, 1);
         poseStack.popPose();
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal("lag"));
+
     } //TODO: Check the position of the title of the gui y-45 x244
 
 
-    private void addButtonsToGui() { //done
+    @Override
+    public void renderBackground(PoseStack pPoseStack) {
+        super.renderBackground(pPoseStack);
+    }
+
+    private void addButtonsToGui(PoseStack poseStack) { //done
         if(!ButtonsRendered) {
             ButtonsRendered = true;
-            addRenderableWidget(new ImageButton((x - 51) / 2, (y + 76) / 2, 53, 12, 151, 202, 13, TEXTURE_RENDER_GUI, 256, 256, this::close, Component.literal("wa")));
+            addRenderableWidget(closebutton);
+
         }
     }
 
-    private void addTextToGui(PoseStack poseStack) {
-        font.draw(poseStack, Component.translatable("vitalsense.gui.button.eyeguistatsclose").setStyle(Style.EMPTY.withColor(4210752)), (float) (x - 52) / 2, (float) (y + 78) / 2, 1 );
+    private void addTextToGui(PoseStack poseStack, int color) {
+        poseStack.pushPose();
+        poseStack.scale(0.85f, 0.85f, 1.0f);
+        //todo: add text to gui stats
+
+        //Button text
+        font.draw(poseStack, Component.translatable("vitalsense.gui.button.close").setStyle(Style.EMPTY.withColor(color)), (float) (x + 53) / 1.90f, (float) (y + 26) / 1.90f, 1 );
+        poseStack.popPose();
     }
 
 
@@ -81,7 +99,7 @@ public class EyeGui extends Screen {
         RenderSystem.setShaderTexture(0, TEXTURE_RENDER_GUI);
 
 
-        blit(poseStack, (x - 43) / 2, (y - 99) / 2, eyeXRenderOrigin, eyeYRenderOrigin, eyeXRenderEnd - eyeXRenderOrigin, eyeYRenderEnd - eyeYRenderOrigin, 256, 256);
+        blit(poseStack, (int) ((x + 5) / 2.75f), (int) ((y - 79) / 2.75f), eyeXRenderOrigin, eyeYRenderOrigin, eyeXRenderEnd - eyeXRenderOrigin, eyeYRenderEnd - eyeYRenderOrigin, 256, 256);
     }
 
 
@@ -133,9 +151,19 @@ public class EyeGui extends Screen {
     @Override
     public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float delta) {
         poseStack.clear();
-        super.render(poseStack, mouseX, mouseY, delta);
+
         renderBackground(poseStack);
         renderBg(poseStack);
+        super.render(poseStack, mouseX, mouseY, delta);
+        addButtonsToGui(poseStack);
+
+        if(closebutton.isMouseOver(mouseX,mouseY)) {
+            addTextToGui(poseStack, 7368816);
+        } else {
+            addTextToGui(poseStack, 4210752);
+        }
+        poseStack.popPose();
+
 
 
 

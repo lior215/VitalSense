@@ -145,15 +145,13 @@ public class RenderBlinkEffectScreen {
         public static void checkForFps() throws NoSuchFieldException, IllegalAccessException {
             Field fps = Minecraft.class.getDeclaredField("fps");
             fps.setAccessible(true);
-            if(fps.getInt(fps) <= 20) {
-                skipDelay = true;
-            } else if (fps.getInt(fps) > 20 && fps.getInt(fps) <= 40) {
+            if (fps.getInt(fps) <= 40) {
                 skipDelay = true;
             }else if (fps.getInt(fps) >=100) {
-                renderdelay = fps.getInt(fps) / 20;
+                renderdelay = fps.getInt(fps) / 30;
                 skipDelay = false;
             } else {
-                renderdelay = 3;
+                renderdelay = 2;
                 skipDelay = false;
             }
             //assert Minecraft.getInstance().player != null;

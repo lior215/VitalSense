@@ -1,6 +1,7 @@
 package com.lior215.vitalsense.commands;
 
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
+import com.lior215.vitalsense.client.ClientEyeHealth;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
@@ -15,7 +16,7 @@ public class EyeHealthInfo {
         }
     private int eyeHealthInfo (CommandSourceStack source) {
         Player player = source.getPlayer();
-        player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> source.sendSuccess(Component.literal("Your Eye health is " + eyeHealth.getHealthValue()), true));
+        player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> source.sendSuccess(Component.literal("Your Eye health is " + eyeHealth.getHealthValue() + " Client: "+ ClientEyeHealth.getEyeHealth()), true));
 
         return 1;
     }
