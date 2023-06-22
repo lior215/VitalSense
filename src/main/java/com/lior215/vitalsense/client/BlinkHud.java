@@ -10,7 +10,7 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class BlinkHud {
 
-    private static final ResourceLocation RENDERED_EYEHUD_IMAGE = new ResourceLocation(vitalsense.MOD_ID,"textures/misc/eyehud.png");
+    private static final ResourceLocation RENDERED_EYEHUD_IMAGE = new ResourceLocation(vitalsense.MOD_ID,"textures/eyes/eyehud.png");
 
     private static int xRenderOrigin;
     private static int yRenderOrigin;
@@ -64,7 +64,7 @@ public class BlinkHud {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, RENDERED_EYEHUD_IMAGE);
         if(checkImageBasedOnBlinkTimerAndStatus()) {
-            GuiComponent.blit(poseStack, x + 96, y - 18, xRenderOrigin, yRenderOrigin, xRenderEnd - xRenderOrigin, yRenderEnd - yRenderOrigin, 80, 16);
+            GuiComponent.blit( poseStack, x + 96, y - 18, xRenderOrigin, yRenderOrigin, xRenderEnd - xRenderOrigin, yRenderEnd - yRenderOrigin, 80, 16);
         }
     });
 

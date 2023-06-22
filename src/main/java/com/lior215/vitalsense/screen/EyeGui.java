@@ -7,15 +7,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.components.Widget;
-import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.ScreenEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class EyeGui extends Screen {
@@ -24,11 +20,11 @@ public class EyeGui extends Screen {
     int y = Minecraft.getInstance().getWindow().getGuiScaledHeight();
     private boolean ButtonsRendered = false;
 
-    ImageButton closebutton = new ImageButton((int) ((x + 9 ) / 2.25f), (int) ((y + 19) / 2.25), 66, 15, 151, 199, 16, TEXTURE_RENDER_GUI, 256, 256, this::close);
+    ImageButton closebutton = new ImageButton((int) ((x + 266 ) / 2.25f), (int) ((y - 130) / 2.25), 18, 18, 220, 198, 19, TEXTURE_RENDER_GUI, 256, 256, this::close);
 
 
 
-    private static final ResourceLocation TEXTURE_RENDER_GUI = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/eyestatsgui.png");
+    private static final ResourceLocation TEXTURE_RENDER_GUI = new ResourceLocation(vitalsense.MOD_ID, "textures/gui/eyestatsgui.png");
     public EyeGui() {
         super(Component.literal("eye gui"));
     }
@@ -40,8 +36,6 @@ public class EyeGui extends Screen {
         int yRenderOrigin = 0;
         int xRenderEnd = 174;
         int yRenderEnd = 135;
-        int Xscaler = 173 / 100 * 25;
-        int Yscaler = 150 / 100 * 25;
 
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -62,7 +56,7 @@ public class EyeGui extends Screen {
         //title
         poseStack.pushPose();
         poseStack.scale(0.85f, 0.85f, 1.0f);
-        font.draw(poseStack, Component.translatable("vitalsense.gui.eyestatsgui").setStyle(Style.EMPTY.withColor(100)), (float) (x - 1) / 1.85f, (float) (y - 145) / 1.85f, 1);
+        font.draw(poseStack, Component.translatable("vitalsense.gui.eyestatsgui").setStyle(Style.EMPTY.withColor(4210752)), (float) (x - 1) / 1.85f, (float) (y - 145) / 1.85f, 1);
         poseStack.popPose();
 
     } //TODO: Check the position of the title of the gui y-45 x244
@@ -157,12 +151,11 @@ public class EyeGui extends Screen {
         super.render(poseStack, mouseX, mouseY, delta);
         addButtonsToGui(poseStack);
 
-        if(closebutton.isMouseOver(mouseX,mouseY)) {
-            addTextToGui(poseStack, 7368816);
-        } else {
-            addTextToGui(poseStack, 4210752);
-        }
-        poseStack.popPose();
+        //if(closebutton.isMouseOver(mouseX,mouseY)) {
+        //    addTextToGui(poseStack, 7368816);
+        //} else {
+        //    addTextToGui(poseStack, 4210752);
+        //}
 
 
 

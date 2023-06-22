@@ -23,24 +23,34 @@ import java.lang.reflect.Field;
 
 public class RenderBlinkEffectScreen {
 
-    static TimerProvider Timer = new TimerProvider(15);
-    static int renderdelay = 100;
-    static boolean skipDelay = false;
+    private static TimerProvider Timer = new TimerProvider(15);
+    private static boolean redEyesDisease = false;
+    private static int renderdelay = 100;
+    private static boolean skipDelay = false;
     private static LightLevelProvider lightLevelProvider = new LightLevelProvider();
-    static Minecraft mc = Minecraft.getInstance();
+    private static Minecraft mc = Minecraft.getInstance();
     protected static int screenWidth;
     protected static int screenHeight;
+    private static float renderTransparency = 1.0f;
     private static int multiplier = 1;
     private static int belowMultiplier = 10;
     private static final int screenDivider = 10;
     private static float UV_U;
     private static float UV_V;
-    private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/misc/blink_colormap.png");
+    private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/blink_colormap.png");
+    private final static ResourceLocation REDEYES_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/redeyevignette.png");
     private static ResourceLocation CUSTOM_IMG_LOCATION = null;
     private static ResourceLocation RENDERED_IMG_LOCATION;
 
     public static void setSkipDelay(boolean toggle) {
         skipDelay = toggle;
+    }
+
+    public static void setRedEyesDisease(boolean toggle) {
+        redEyesDisease = toggle;
+    }
+    public static void setRenderTransparency(float value) {
+        renderTransparency = value;
     }
 
     //Image Manager
@@ -49,7 +59,7 @@ public class RenderBlinkEffectScreen {
         return CUSTOM_IMG_LOCATION;
     }
 
-    public static void checkCustomImage() {
+    public static void checkCustomImageAndDiseases() {
         if (CUSTOM_IMG_LOCATION == null) {
             RENDERED_IMG_LOCATION = DEFAULT_IMG_LOCATION;
         } else {

@@ -19,6 +19,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
+import static com.lior215.vitalsense.mobeffects.ModMobEffects.MOD_EFFECTS;
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(vitalsense.MOD_ID)
 public class vitalsense {
@@ -37,6 +39,7 @@ public class vitalsense {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModCommonConfigs.SPEC, "vitalsense-common-config.toml");
 
         ModItems.register(modEventBus);
+        MOD_EFFECTS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -56,7 +59,7 @@ public class vitalsense {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            RenderBlinkEffectScreen.checkCustomImage();
+            RenderBlinkEffectScreen.checkCustomImageAndDiseases();
             ModClientConfigs.checkConfigs();
 
         }
