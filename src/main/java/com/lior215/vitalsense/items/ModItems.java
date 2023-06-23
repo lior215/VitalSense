@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 public class ModItems {
     public static final DeferredRegister<Item> MOD_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, vitalsense.MOD_ID);
 
-    public static final RegistryObject<Item> STRAW = MOD_ITEMS.register("air_o_meter",
+    public static final RegistryObject<Item> AIR_O_METER = MOD_ITEMS.register("air_o_meter",
             () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
 
     public static void register(IEventBus eventBus) {
