@@ -42,7 +42,7 @@ public class photophobia extends MobEffect {
     }
 
     @Override
-    public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) { //todo add effect on screen
+    public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         int LightLevelOnBlock = pLivingEntity.level.getBrightness(LightLayer.BLOCK, pLivingEntity.getOnPos().offset(0,+2,0));
 
 
