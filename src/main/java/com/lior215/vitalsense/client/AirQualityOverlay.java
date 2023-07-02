@@ -30,11 +30,8 @@ public class AirQualityOverlay {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, AIR_QUALITY);
-        LOGGER.info("loaded");
-        LOGGER.info("Player != null");
         if (player != null && player.getInventory().contains(new ItemStack(Items.AMETHYST_SHARD))) {
             GuiComponent.blit(poseStack, x - 94, y - 54, 0, 0, 160, 16, 160, 16);
-            LOGGER.info("bliting the gui");
         }
     });
 

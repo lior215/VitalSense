@@ -16,17 +16,16 @@ public class EyeHealthSetCommand {
         public EyeHealthSetCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
             dispatcher.register(Commands.literal("vitalsense").then(Commands.literal("eyehealth").then(Commands.literal("set").then(Commands.argument("count23", IntegerArgumentType.integer())
                     .executes(commandContext -> {
-                            int value23 = IntegerArgumentType.getInteger(commandContext, "count23");
+                            int value23 = IntegerArgumentType.getInteger(commandContext, "value");
                                 return setEyeHealth(commandContext.getSource(), value23);
                         })))));
         }
     private int setEyeHealth (CommandSourceStack source, int value) {
         Player player = source.getPlayer();
         player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> {
-            eyeHealth.setHealthValue(value);
+            eyeHealth.setHealthValue(Math.min(value, 100));
             ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) player);
         });
-        ClientEyeHealth.set(value);
         source.sendSuccess(Component.literal("Your Eye health is now set to " + value), true);
         return value;
     }

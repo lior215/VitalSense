@@ -25,7 +25,7 @@ public class S2CAirQuality {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             //client
-            ClientEyeHealth.set(airQuality);
+            //ClientEyeHealth.set(airQuality);
         });
         return true;
     }

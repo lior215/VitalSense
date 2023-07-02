@@ -27,6 +27,7 @@ public class ModEyeHealthEvents {
     private static TimerProvider timer = new TimerProvider(50);
 
 
+
     //EYE HEALTH
 
     @SubscribeEvent
@@ -68,11 +69,12 @@ public class ModEyeHealthEvents {
                         if (event.player.isEyeInFluidType(Fluids.WATER.getFluidType()) == true) {
                             eyeHealth.reduceHealthValue(2.5f);
                             event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
+                            ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) event.player);
                         } else if (event.player.isEyeInFluidType(Fluids.LAVA.getFluidType())) {
                             eyeHealth.reduceHealthValue(25f);
                             event.player.sendSystemMessage(Component.literal("NOOO MY EYESS " + eyeHealth.getHealthValue()));
+                            ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) event.player);
                         }
-                        ModPackets.sendToPlayer(new S2CEyeHealth(eyeHealth.getHealthValue()), (ServerPlayer) event.player);
                     });
                 }
         }
@@ -99,16 +101,7 @@ public class ModEyeHealthEvents {
     }
 
 
-    @SubscribeEvent
-    public static void hasDisease(TickEvent.PlayerTickEvent event) {
-        if(event.player.hasEffect(ModMobEffects.redeyes.get())) {
-            RedEyesEffect.setRenderEyeDisease(true);
-        } else {
-            RedEyesEffect.setRenderEyeDisease(false);
-            RedEyesEffect.setTransparency(0f);
-            RedEyes.modEffectRedEyesReset();
-        }
-    }
+
 
 
 }
