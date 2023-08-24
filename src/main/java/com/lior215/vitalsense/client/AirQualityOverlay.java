@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.event.TickEvent;
@@ -29,6 +28,10 @@ public class AirQualityOverlay {
         if (Minecraft.getInstance().screen != null) {
             indicatorX = Minecraft.getInstance().screen.width / 2 - 94;
         }
+    }
+
+    public static int getIndicatorX() {
+        return indicatorX;
     }
 
     public static final IGuiOverlay HUD_AIR = ((gui, poseStack, partialTick, width, height) -> {
