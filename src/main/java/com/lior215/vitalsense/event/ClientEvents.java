@@ -32,7 +32,7 @@ public class ClientEvents {
 
     }
     @SubscribeEvent
-    public static void onKeyRegister(RegisterKeyMappingsEvent event) { //TODO: controllare se registra la key
+    public static void onKeyRegister(RegisterKeyMappingsEvent event) {
         vitalsense.LOGGER.info("key registrata");
         event.register(ModKeyBindings.OPEN_EYE_GUI);
     }

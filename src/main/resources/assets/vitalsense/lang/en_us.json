@@ -1,7 +1,14 @@
 {
   "key.category.vitalsense.vital": "VitalSense",
   "key.category.vitalsense.open_eye_gui": "open eye gui",
+
+  "effect.vitalsense.redeyes": "Red eyes",
+  "effect.vitalsense.tunnel_vision": "Tunnel vision",
+
   "vitalsense.gui.eyestatsgui": "eye stats gui",
   "vitalsense.gui.button.close": "close",
-  "effect.vitalsense.redeyes": "Red eyes"
+  "vitalsense.gui.text.redeyedisease": "Red eyes",
+  "vitalsense.gui.text.disease.active": "affected",
+  "vitalsense.gui.text.disease.not.active": "not affected",
+  "vitalsense.gui.text.disease2": "has to be created"
 }

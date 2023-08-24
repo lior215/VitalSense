@@ -17,6 +17,8 @@ public class ModMobEffects {
 
 
     public static final RegistryObject<MobEffect> redeyes = MOD_EFFECTS.register("redeyes", () -> new RedEyes(MobEffectCategory.HARMFUL, 0));
+    public static final RegistryObject<MobEffect> glaucoma = MOD_EFFECTS.register("tunnel_vision", () -> new Glaucoma(MobEffectCategory.HARMFUL, 0));
+    public static final RegistryObject<MobEffect> photophobia = MOD_EFFECTS.register("photophobia", () -> new photophobia(MobEffectCategory.HARMFUL, 0));
 
 
 

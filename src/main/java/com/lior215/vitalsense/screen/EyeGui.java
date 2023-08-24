@@ -16,8 +16,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class EyeGui extends Screen {
 
-    int x = Minecraft.getInstance().getWindow().getGuiScaledWidth();
-    int y = Minecraft.getInstance().getWindow().getGuiScaledHeight();
+    DiseasesOnGui disease = DiseasesOnGui.Red_Eyes;
+    private int x = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+    private int y = Minecraft.getInstance().getWindow().getGuiScaledHeight();
+
+    private int ySpacing = 0;
+    private int affectedColorText = 0;
     private boolean ButtonsRendered = false;
 
     ImageButton closebutton = new ImageButton((int) ((x + 266 ) / 2.25f), (int) ((y - 130) / 2.25), 18, 18, 220, 198, 19, TEXTURE_RENDER_GUI, 256, 256, this::close);
@@ -59,7 +63,7 @@ public class EyeGui extends Screen {
         font.draw(poseStack, Component.translatable("vitalsense.gui.eyestatsgui").setStyle(Style.EMPTY.withColor(4210752)), (float) (x - 1) / 1.85f, (float) (y - 145) / 1.85f, 1);
         poseStack.popPose();
 
-    } //TODO: Check the position of the title of the gui y-45 x244
+    }
 
 
     @Override
@@ -75,14 +79,44 @@ public class EyeGui extends Screen {
         }
     }
 
+    private void addYSpacing(int yValue) {
+        ySpacing += yValue;
+    }
+
+    public String checkForDiseaseAffections(String checkdisease) {
+        disease.setCheckedDisease(checkdisease);
+        Minecraft mc = Minecraft.getInstance();
+
+
+        if (disease.getCheckedDisease()) {
+            affectedColorText = 9109504;
+            return "vitalsense.gui.text.disease.active";
+        } else if (!disease.getCheckedDisease()) {
+            affectedColorText = 78368;
+            return "vitalsense.gui.text.disease.not.active";
+        } else {
+            affectedColorText = 9109504;
+            return "error";
+        }
+    }
+
     private void addTextToGui(PoseStack poseStack, int color) {
+        int spacing = 20;
         poseStack.pushPose();
         poseStack.scale(0.85f, 0.85f, 1.0f);
         //todo: add text to gui stats
 
         //Button text
-        font.draw(poseStack, Component.translatable("vitalsense.gui.button.close").setStyle(Style.EMPTY.withColor(color)), (float) (x + 53) / 1.90f, (float) (y + 26) / 1.90f, 1 );
+        //font.draw(poseStack, Component.translatable("vitalsense.gui.button.close").setStyle(Style.EMPTY.withColor(color)), (float) (x + 53) / 1.90f, (float) (y + 26) / 1.90f, 1 );
+
+        //Disease Renderer
+        font.draw(poseStack, Component.translatable("vitalsense.gui.text.redeyedisease").setStyle(Style.EMPTY.withColor(color)), (float) (x - 123) / 1.90f, (float) (y + 46 + ySpacing) / 1.90f, 1 );
+        font.draw(poseStack, Component.translatable(checkForDiseaseAffections(disease.checkRedEyes())).setStyle(Style.EMPTY.withColor(affectedColorText)), (float) (x - 23) / 1.90f, (float) (y + 46 + ySpacing) / 1.90f, 1 );
+        addYSpacing(spacing);
+        font.draw(poseStack, Component.translatable("vitalsense.gui.text.disease2").setStyle(Style.EMPTY.withColor(color)), (float) (x - 123) / 1.90f, (float) (y + 46 + ySpacing) / 1.90f, 1 );
+        font.draw(poseStack, Component.translatable(checkForDiseaseAffections(disease.checkDisease2())).setStyle(Style.EMPTY.withColor(affectedColorText)), (float) (x - 23) / 1.90f, (float) (y + 46 + ySpacing) / 1.90f, 1 );
         poseStack.popPose();
+        ySpacing = 0;
     }
 
 
@@ -148,6 +182,7 @@ public class EyeGui extends Screen {
 
         renderBackground(poseStack);
         renderBg(poseStack);
+        addTextToGui(poseStack, 4210752);
         super.render(poseStack, mouseX, mouseY, delta);
         addButtonsToGui(poseStack);
 

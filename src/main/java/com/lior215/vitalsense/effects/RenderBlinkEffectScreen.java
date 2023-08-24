@@ -25,7 +25,7 @@ public class RenderBlinkEffectScreen {
 
     private static TimerProvider Timer = new TimerProvider(15);
     private static boolean redEyesDisease = false;
-    private static int renderdelay = 100;
+    private static double renderdelay = 100;
     private static boolean skipDelay = false;
     private static LightLevelProvider lightLevelProvider = new LightLevelProvider();
     private static Minecraft mc = Minecraft.getInstance();
@@ -150,7 +150,6 @@ public class RenderBlinkEffectScreen {
 
 
     @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-    //TODO: make so the blink render is faster
     public static class RenderBlinkEventClass {
         public static void checkForFps() throws NoSuchFieldException, IllegalAccessException {
             Field fps = Minecraft.class.getDeclaredField("fps");
@@ -164,8 +163,6 @@ public class RenderBlinkEffectScreen {
                 renderdelay = 2;
                 skipDelay = false;
             }
-            //assert Minecraft.getInstance().player != null;
-            //Minecraft.getInstance().player.sendSystemMessage(Component.literal("fps: "+fps + " delay: "+renderdelay + " skip "+skipDelay));
         }
 
         @SubscribeEvent

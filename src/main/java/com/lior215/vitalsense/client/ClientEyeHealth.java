@@ -10,4 +10,12 @@ public class ClientEyeHealth {
     public static float getEyeHealth() {
         return eyeHealth;
     }
+
+
+
+    //USE THE PACKET S2C BUT IF YOU CAN'T THEN USE THIS
+
+    public static void decreaseEyeHealth(float value) {
+        eyeHealth = eyeHealth - value;
+    }
 }

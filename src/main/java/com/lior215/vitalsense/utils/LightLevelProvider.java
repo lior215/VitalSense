@@ -1,7 +1,14 @@
 package com.lior215.vitalsense.utils;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.extensions.IForgeBlockState;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LightLevelProvider { //Server does not crash with this methods so it's all fine
 
@@ -54,6 +61,57 @@ public class LightLevelProvider { //Server does not crash with this methods so i
 
         return actualLightLevel;
     }
+
+
+
+    //Block light checker
+
+    public static List<BlockPos> getTargetedBlocks(int length, int width) {
+        Minecraft minecraft = Minecraft.getInstance();
+        List<BlockPos> targetedBlocks = new ArrayList<>();
+
+        if (minecraft.player != null) {
+            Vec3 playerPos = minecraft.player.getEyePosition(1.0f);
+            Vec3 lookVector = minecraft.player.getLookAngle().scale(1.0f);
+
+            for (int i = 1; i <= length; i++) {
+                Vec3 targetPos = playerPos.add(lookVector.x * i, lookVector.y * i, lookVector.z * i);
+
+                for (int j = -width / 2; j <= width / 2; j++) {
+                    BlockPos blockPos = new BlockPos(targetPos.add(lookVector.z * j, 0, -lookVector.x * j));
+                    targetedBlocks.add(blockPos);
+                }
+            }
+        }
+
+        return targetedBlocks;
+    }
+
+
+    public static boolean isBlockInConeWithLight(List<BlockPos> blocks, int levelToCheck) {
+        assert Minecraft.getInstance().level != null;
+        for (int i = 0; i < blocks.size(); i++) {
+            IForgeBlockState blockState = Minecraft.getInstance().level.getBlockState(blocks.get(i));
+            if (blockState.getLightEmission(Minecraft.getInstance().level, blocks.get(i)) > levelToCheck) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public static int getBlockInConeWithLight(List<BlockPos> blocks, int levelToCheck) {
+        assert Minecraft.getInstance().level != null;
+        for (int i = 0; i < blocks.size(); i++) {
+            IForgeBlockState blockState = Minecraft.getInstance().level.getBlockState(blocks.get(i));
+            if (blockState.getLightEmission(Minecraft.getInstance().level, blocks.get(i)) > levelToCheck) {
+                return blockState.getLightEmission(Minecraft.getInstance().level, blocks.get(i));
+            }
+        }
+        return 0;
+    }
+
+
 
 
 }

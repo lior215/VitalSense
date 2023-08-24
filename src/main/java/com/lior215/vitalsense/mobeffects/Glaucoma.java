@@ -1,5 +1,6 @@
 package com.lior215.vitalsense.mobeffects;
 
+import com.lior215.vitalsense.client.ClientEyeHealth;
 import com.lior215.vitalsense.effects.GlaucomaEffect;
 import com.lior215.vitalsense.effects.RedEyesEffect;
 import com.lior215.vitalsense.utils.TimerProvider;
@@ -11,48 +12,39 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.NotNull;
 
-public class RedEyes extends MobEffect implements INBTSerializable<CompoundTag> {
-
+public class Glaucoma extends MobEffect implements INBTSerializable<CompoundTag> {
 
 
     private static TimerProvider delayEffectTimer = new TimerProvider(11);
     private static float multiplier = 0f;
 
-    protected RedEyes(MobEffectCategory pCategory, int pColor) {
-        super(pCategory, pColor);
-    }
-
-    public static void modEffectRedEyesReset() {
+    public static void modEffectGlaucomaReset() {
         multiplier = 0;
         delayEffectTimer.setTimerToStartValue();
     }
 
-    public static float getMultiplier() {
-        return multiplier;
+
+    protected Glaucoma(MobEffectCategory pCategory, int pColor) {
+        super(pCategory, pColor);
     }
+
 
 
     @Override
     public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
 
         if(delayEffectTimer.getTimer() == 1) {
-            if(multiplier < 1.0f) {
-                multiplier += 0.015;
+            if(multiplier < 1f) {
+                multiplier += 0.01f;
             }
-            RedEyesEffect.setTransparency(0.0f + multiplier);
+            GlaucomaEffect.setTransparency(0.0f + multiplier);
         } else if (delayEffectTimer.getTimer() == 0) {
             delayEffectTimer.setTimerToStartValue();
         }
         delayEffectTimer.decreaseTimer();
-        //Eye damager in ServerDiseaseManagerEvents.java
+
         super.applyEffectTick(pLivingEntity, pAmplifier);
     }
-
-
-
-
-
-
 
 
 
@@ -63,16 +55,18 @@ public class RedEyes extends MobEffect implements INBTSerializable<CompoundTag> 
 
 
 
+
+
     public void saveNBTData(CompoundTag nbt) {
-        nbt.putFloat("redeyes_multiplier", multiplier);
-        nbt.putBoolean("has_redeyes", RedEyesEffect.getRenderDisease());
+        nbt.putFloat("glaucoma_multiplier", multiplier);
+        nbt.putBoolean("has_glaucoma", GlaucomaEffect.getRenderDisease());
     }
 
 
     public void loadNBTData(CompoundTag nbt) {
         vitalsense.LOGGER.info("loaded nbt data glaucoma");
-        multiplier = nbt.getFloat("redeyes_multiplier");
-        RedEyesEffect.setRenderEyeDisease(nbt.getBoolean("has_redeyes"));
+        multiplier = nbt.getFloat("glaucoma_multiplier");
+        GlaucomaEffect.setRenderEyeDisease(nbt.getBoolean("has_glaucoma"));
     }
 
 
@@ -87,6 +81,4 @@ public class RedEyes extends MobEffect implements INBTSerializable<CompoundTag> 
     public void deserializeNBT(CompoundTag nbt) {
         loadNBTData(nbt);
     }
-
-
 }
