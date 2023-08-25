@@ -1,9 +1,9 @@
 package com.lior215.vitalsense.effects;
 
+import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.config.ModCommonConfigs;
 import com.lior215.vitalsense.event.ModBlinkingTimerEvents;
 import com.lior215.vitalsense.mobeffects.Glaucoma;
-import com.lior215.vitalsense.vitalsense;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -23,9 +23,9 @@ public class photophobiaEffect {
     private static boolean renderEyeDisease = false;
     private static float transparency = 0.0f;
     private static int frame = 1;
-    private static final ResourceLocation FOTOFOBIAFRAME1 = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/diseases/all-in/light_1_frame.png");
-    private static final ResourceLocation FOTOFOBIAFRAME2 = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/diseases/all-in/light_2_frame.png");
-    private static final ResourceLocation FOTOFOBIAFRAME3 = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/diseases/all-in/light_3_frame.png");
+    private static final ResourceLocation FOTOFOBIAFRAME1 = new ResourceLocation(VitalSense.MOD_ID, "textures/eyes/diseases/all-in/light_1_frame.png");
+    private static final ResourceLocation FOTOFOBIAFRAME2 = new ResourceLocation(VitalSense.MOD_ID, "textures/eyes/diseases/all-in/light_2_frame.png");
+    private static final ResourceLocation FOTOFOBIAFRAME3 = new ResourceLocation(VitalSense.MOD_ID, "textures/eyes/diseases/all-in/light_3_frame.png");
 
 
     public static boolean getRenderDisease() {
@@ -93,7 +93,7 @@ public class photophobiaEffect {
     }
 
 
-    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = VitalSense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
     public static class RenderBlinkEventClass {
         @SubscribeEvent
         public static void renderDiseaseGlaucoma(RenderGuiOverlayEvent.Post event) {

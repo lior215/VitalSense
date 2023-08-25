@@ -1,7 +1,7 @@
 package com.lior215.vitalsense.screen;
 
+import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.client.ClientEyeHealth;
-import com.lior215.vitalsense.vitalsense;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -28,7 +28,7 @@ public class EyeGui extends Screen {
 
 
 
-    private static final ResourceLocation TEXTURE_RENDER_GUI = new ResourceLocation(vitalsense.MOD_ID, "textures/gui/eyestatsgui.png");
+    private static final ResourceLocation TEXTURE_RENDER_GUI = new ResourceLocation(VitalSense.MOD_ID, "textures/gui/eyestatsgui.png");
     public EyeGui() {
         super(Component.literal("eye gui"));
     }

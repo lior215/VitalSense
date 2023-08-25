@@ -1,13 +1,13 @@
 package com.lior215.vitalsense.event;
 
+import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.utils.TimerProvider;
-import com.lior215.vitalsense.vitalsense;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = VitalSense.MOD_ID, value = Dist.CLIENT)
 public class ModBlinkingTimerEvents {
 
     public static TimerProvider blinkTimerToBlink = new TimerProvider(75);

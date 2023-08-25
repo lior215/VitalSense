@@ -1,7 +1,8 @@
 package com.lior215.vitalsense.network;
 
+import com.lior215.vitalsense.network.packets.S2CAirQuality;
 import com.lior215.vitalsense.network.packets.S2CEyeHealth;
-import com.lior215.vitalsense.vitalsense;
+import com.lior215.vitalsense.VitalSense;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -19,7 +20,7 @@ public class ModPackets {
 
     public static void register() {
         SimpleChannel net = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(vitalsense.MOD_ID, "messages"))
+                .named(new ResourceLocation(VitalSense.MOD_ID, "messages"))
                 .networkProtocolVersion(() -> "1.0")
                 .clientAcceptedVersions(s -> true)
                 .serverAcceptedVersions(s -> true)
@@ -31,6 +32,12 @@ public class ModPackets {
                 .decoder(S2CEyeHealth::new)
                 .encoder(S2CEyeHealth::toBytes)
                 .consumerMainThread(S2CEyeHealth::handle)
+                .add();
+
+        net.messageBuilder(S2CAirQuality.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(S2CAirQuality::new)
+                .encoder(S2CAirQuality::toBytes)
+                .consumerMainThread(S2CAirQuality::handle)
                 .add();
     }
 

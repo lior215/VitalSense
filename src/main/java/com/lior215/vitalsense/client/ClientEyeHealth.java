@@ -11,10 +11,10 @@ public class ClientEyeHealth {
         return eyeHealth;
     }
 
-
-
-    //USE THE PACKET S2C BUT IF YOU CAN'T THEN USE THIS
-
+    /**
+     * Only use this if you can't use the {@link com.lior215.vitalsense.network.packets.S2CEyeHealth} Packet
+     */
+    @Deprecated
     public static void decreaseEyeHealth(float value) {
         eyeHealth = eyeHealth - value;
     }

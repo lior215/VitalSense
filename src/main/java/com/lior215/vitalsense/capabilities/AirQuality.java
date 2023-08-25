@@ -1,7 +1,7 @@
 package com.lior215.vitalsense.capabilities;
 
 import com.lior215.vitalsense.client.ClientEyeHealth;
-import com.lior215.vitalsense.vitalsense;
+import com.lior215.vitalsense.VitalSense;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
@@ -15,7 +15,7 @@ public class AirQuality {
 
     int airQuality = getAirQuality();
 
-    int indicatorX = getIndicatorX();
+    int indicatorX = getIndicatorX;
 
     public int getAirQuality() {
         return this.indicatorX - this.defaultIndicatorPos;
@@ -35,7 +35,7 @@ public class AirQuality {
 
 
     public void loadNBTData(CompoundTag nbt) {
-        vitalsense.LOGGER.info("loaded nbt data for airQuality");
+        VitalSense.LOGGER.info("loaded nbt data for airQuality");
         this.airQuality = nbt.getInt("airQuality");
         ClientEyeHealth.set(nbt.getFloat("airQuality"));
     }

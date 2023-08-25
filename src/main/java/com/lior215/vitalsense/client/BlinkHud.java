@@ -1,7 +1,7 @@
 package com.lior215.vitalsense.client;
 
+import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.event.ModBlinkingTimerEvents;
-import com.lior215.vitalsense.vitalsense;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
@@ -10,7 +10,7 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class BlinkHud {
 
-    private static final ResourceLocation RENDERED_EYEHUD_IMAGE = new ResourceLocation(vitalsense.MOD_ID,"textures/eyes/eyehud.png");
+    private static final ResourceLocation RENDERED_EYEHUD_IMAGE = new ResourceLocation(VitalSense.MOD_ID,"textures/eyes/eyehud.png");
 
     private static int xRenderOrigin;
     private static int yRenderOrigin;

@@ -4,7 +4,7 @@ import com.lior215.vitalsense.config.ModCommonConfigs;
 import com.lior215.vitalsense.event.ModBlinkingTimerEvents;
 import com.lior215.vitalsense.utils.LightLevelProvider;
 import com.lior215.vitalsense.utils.TimerProvider;
-import com.lior215.vitalsense.vitalsense;
+import com.lior215.vitalsense.VitalSense;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -37,8 +37,8 @@ public class RenderBlinkEffectScreen {
     private static final int screenDivider = 10;
     private static float UV_U;
     private static float UV_V;
-    private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/blink_colormap.png");
-    private final static ResourceLocation REDEYES_IMG_LOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/redeyevignette.png");
+    private final static ResourceLocation DEFAULT_IMG_LOCATION = new ResourceLocation(VitalSense.MOD_ID, "textures/eyes/blink_colormap.png");
+    private final static ResourceLocation REDEYES_IMG_LOCATION = new ResourceLocation(VitalSense.MOD_ID, "textures/eyes/redeyevignette.png");
     private static ResourceLocation CUSTOM_IMG_LOCATION = null;
     private static ResourceLocation RENDERED_IMG_LOCATION;
 
@@ -149,7 +149,7 @@ public class RenderBlinkEffectScreen {
 
 
 
-    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = VitalSense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
     public static class RenderBlinkEventClass {
         public static void checkForFps() throws NoSuchFieldException, IllegalAccessException {
             Field fps = Minecraft.class.getDeclaredField("fps");

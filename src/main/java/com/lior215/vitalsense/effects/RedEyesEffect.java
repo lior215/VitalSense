@@ -3,7 +3,7 @@ package com.lior215.vitalsense.effects;
 import com.lior215.vitalsense.config.ModCommonConfigs;
 import com.lior215.vitalsense.event.ModBlinkingTimerEvents;
 import com.lior215.vitalsense.mobeffects.RedEyes;
-import com.lior215.vitalsense.vitalsense;
+import com.lior215.vitalsense.VitalSense;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.CameraType;
@@ -37,9 +37,9 @@ public class RedEyesEffect {
     }
 
 
-    private static final ResourceLocation REDEYESDISEASELOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/diseases/first_person/redeyevignette2.png");
+    private static final ResourceLocation REDEYESDISEASELOCATION = new ResourceLocation(VitalSense.MOD_ID, "textures/eyes/diseases/first_person/redeyevignette2.png");
 
-    private static final ResourceLocation REDEYESDISEASELOCATIONTHIRDPERSON = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/diseases/third_person/redeyevignette.png");
+    private static final ResourceLocation REDEYESDISEASELOCATIONTHIRDPERSON = new ResourceLocation(VitalSense.MOD_ID, "textures/eyes/diseases/third_person/redeyevignette.png");
 
     public static ResourceLocation checkForCameraType() {
         if (Minecraft.getInstance().options.getCameraType().equals(CameraType.FIRST_PERSON)) {
@@ -83,7 +83,7 @@ public class RedEyesEffect {
     }
 
 
-    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = VitalSense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
     public static class RenderRedEyesEventClass {
         @SubscribeEvent
         public static void renderDiseaseRedEyes(RenderGuiOverlayEvent.Post event) {

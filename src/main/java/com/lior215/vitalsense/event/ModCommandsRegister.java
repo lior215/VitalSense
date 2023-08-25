@@ -1,15 +1,15 @@
 package com.lior215.vitalsense.event;
 
 
+import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.commands.EyeHealthInfo;
 import com.lior215.vitalsense.commands.EyeHealthSetCommand;
-import com.lior215.vitalsense.vitalsense;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.command.ConfigCommand;
 
-@Mod.EventBusSubscriber(modid = vitalsense.MOD_ID)
+@Mod.EventBusSubscriber(modid = VitalSense.MOD_ID)
 public class ModCommandsRegister {
 
 

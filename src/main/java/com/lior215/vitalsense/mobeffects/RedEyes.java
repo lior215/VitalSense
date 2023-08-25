@@ -1,9 +1,8 @@
 package com.lior215.vitalsense.mobeffects;
 
-import com.lior215.vitalsense.effects.GlaucomaEffect;
 import com.lior215.vitalsense.effects.RedEyesEffect;
 import com.lior215.vitalsense.utils.TimerProvider;
-import com.lior215.vitalsense.vitalsense;
+import com.lior215.vitalsense.VitalSense;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -70,7 +69,7 @@ public class RedEyes extends MobEffect implements INBTSerializable<CompoundTag> 
 
 
     public void loadNBTData(CompoundTag nbt) {
-        vitalsense.LOGGER.info("loaded nbt data glaucoma");
+        VitalSense.LOGGER.info("loaded nbt data glaucoma");
         multiplier = nbt.getFloat("redeyes_multiplier");
         RedEyesEffect.setRenderEyeDisease(nbt.getBoolean("has_redeyes"));
     }

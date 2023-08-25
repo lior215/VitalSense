@@ -1,9 +1,9 @@
 package com.lior215.vitalsense.effects;
 
+import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.config.ModCommonConfigs;
 import com.lior215.vitalsense.event.ModBlinkingTimerEvents;
 import com.lior215.vitalsense.mobeffects.Glaucoma;
-import com.lior215.vitalsense.vitalsense;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.CameraType;
@@ -37,9 +37,9 @@ public class GlaucomaEffect {
     }
 
 
-    private static final ResourceLocation GLAUCOMADISEASELOCATION = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/diseases/first_person/glaucomavignette.png");
+    private static final ResourceLocation GLAUCOMADISEASELOCATION = new ResourceLocation(VitalSense.MOD_ID, "textures/eyes/diseases/first_person/glaucomavignette.png");
 
-    private static final ResourceLocation GLAUCOMADISEASELOCATIONTHIRDPERSON = new ResourceLocation(vitalsense.MOD_ID, "textures/eyes/diseases/third_person/glaucomavignette.png");
+    private static final ResourceLocation GLAUCOMADISEASELOCATIONTHIRDPERSON = new ResourceLocation(VitalSense.MOD_ID, "textures/eyes/diseases/third_person/glaucomavignette.png");
 
     public static ResourceLocation checkForCameraType() {
         if (Minecraft.getInstance().options.getCameraType().equals(CameraType.FIRST_PERSON)) {
@@ -81,7 +81,7 @@ public class GlaucomaEffect {
     }
 
 
-    @Mod.EventBusSubscriber(modid = vitalsense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = VitalSense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
     public static class RenderBlinkEventClass {
         @SubscribeEvent
         public static void renderDiseaseGlaucoma(RenderGuiOverlayEvent.Post event) {

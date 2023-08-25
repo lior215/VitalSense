@@ -22,8 +22,8 @@ import org.slf4j.Logger;
 import static com.lior215.vitalsense.mobeffects.ModMobEffects.MOD_EFFECTS;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(vitalsense.MOD_ID)
-public class vitalsense {
+@Mod(VitalSense.MOD_ID)
+public class VitalSense {
 
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "vitalsense";
@@ -31,7 +31,7 @@ public class vitalsense {
     public static final Logger LOGGER = LogUtils.getLogger();
     // Create a Deferred Register to hold Blocks which will all be registered under the "VitalSense" namespace
 
-    public vitalsense() {
+    public VitalSense() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
 

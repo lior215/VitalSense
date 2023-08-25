@@ -1,5 +1,6 @@
 package com.lior215.vitalsense.event;
 
+import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
 import com.lior215.vitalsense.effects.photophobiaEffect;
 import com.lior215.vitalsense.effects.GlaucomaEffect;
@@ -11,7 +12,6 @@ import com.lior215.vitalsense.mobeffects.RedEyes;
 import com.lior215.vitalsense.network.ModPackets;
 import com.lior215.vitalsense.network.packets.S2CEyeHealth;
 import com.lior215.vitalsense.utils.TimerProvider;
-import com.lior215.vitalsense.vitalsense;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Random;
 
 
-@Mod.EventBusSubscriber(modid = vitalsense.MOD_ID)
+@Mod.EventBusSubscriber(modid = VitalSense.MOD_ID)
 public class ServerDiseaseManagerEvents {
 
 

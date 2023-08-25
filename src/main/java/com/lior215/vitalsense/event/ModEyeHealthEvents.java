@@ -1,12 +1,9 @@
 package com.lior215.vitalsense.event;
 
-import com.lior215.vitalsense.effects.RedEyesEffect;
-import com.lior215.vitalsense.mobeffects.ModMobEffects;
-import com.lior215.vitalsense.mobeffects.RedEyes;
+import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.network.ModPackets;
 import com.lior215.vitalsense.network.packets.S2CEyeHealth;
 import com.lior215.vitalsense.utils.TimerProvider;
-import com.lior215.vitalsense.vitalsense;
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = vitalsense.MOD_ID)
+@Mod.EventBusSubscriber(modid = VitalSense.MOD_ID)
 public class ModEyeHealthEvents {
 
     private static TimerProvider timer = new TimerProvider(50);
@@ -34,7 +31,7 @@ public class ModEyeHealthEvents {
     public static void onAttachCapabilitiesPlayerEyeHealth(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Player) {
             if (!event.getObject().getCapability(EyeHealthProvider.eHealth).isPresent()) {
-                event.addCapability(new ResourceLocation(vitalsense.MOD_ID, "eyehealthproperties"), new EyeHealthProvider());
+                event.addCapability(new ResourceLocation(VitalSense.MOD_ID, "eyehealthproperties"), new EyeHealthProvider());
             }
         }
     }

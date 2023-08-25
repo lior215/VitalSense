@@ -1,6 +1,6 @@
 package com.lior215.vitalsense.items;
 
-import com.lior215.vitalsense.vitalsense;
+import com.lior215.vitalsense.VitalSense;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -9,7 +9,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class ModItems {
-    public static final DeferredRegister<Item> MOD_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, vitalsense.MOD_ID);
+    public static final DeferredRegister<Item> MOD_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, VitalSense.MOD_ID);
 
     public static final RegistryObject<Item> AIR_O_METER = MOD_ITEMS.register("air_o_meter",
             () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
