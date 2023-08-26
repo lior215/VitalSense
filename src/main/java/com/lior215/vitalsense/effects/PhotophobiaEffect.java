@@ -16,7 +16,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-public class photophobiaEffect {
+public class PhotophobiaEffect {
 
     private static int screenWidth;
     private static int screenHeight;
@@ -97,7 +97,7 @@ public class photophobiaEffect {
     public static class RenderBlinkEventClass {
         @SubscribeEvent
         public static void renderDiseaseGlaucoma(RenderGuiOverlayEvent.Post event) {
-            if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && photophobiaEffect.getRenderDisease() && !Minecraft.getInstance().options.hideGui) {
+            if (event.getOverlay().id() == VanillaGuiOverlay.VIGNETTE.id() && PhotophobiaEffect.getRenderDisease() && !Minecraft.getInstance().options.hideGui) {
                 FOTOFOBIA_DISEASE();
             }
         }
@@ -109,7 +109,7 @@ public class photophobiaEffect {
         if (event.type == TickEvent.Type.RENDER && event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
 
             // If the player has pressed F1, the render will not be hidden
-            if (Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get() && ModCommonConfigs.ToggleDiseaseScreenOnF1.get() && photophobiaEffect.getRenderDisease()) {
+            if (Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get() && ModCommonConfigs.ToggleDiseaseScreenOnF1.get() && PhotophobiaEffect.getRenderDisease()) {
                 FOTOFOBIA_DISEASE();
             }
         }

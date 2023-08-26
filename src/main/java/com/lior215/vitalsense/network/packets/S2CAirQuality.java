@@ -1,6 +1,7 @@
 package com.lior215.vitalsense.network.packets;
 
 import com.lior215.vitalsense.client.ClientAirQuality;
+import com.lior215.vitalsense.client.ClientEyeHealth;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -24,6 +25,7 @@ public class S2CAirQuality {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
+            // HERE WE ARE ON THE CLIENT!
             ClientAirQuality.set(airQuality);
         });
         return true;

@@ -3,7 +3,6 @@ package com.lior215.vitalsense.commands;
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
 import com.lior215.vitalsense.client.ClientEyeHealth;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;

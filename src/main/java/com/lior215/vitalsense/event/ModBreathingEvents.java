@@ -1,7 +1,8 @@
 package com.lior215.vitalsense.event;
 
-import com.lior215.vitalsense.capabilities.AirQualityProvider;
 import com.lior215.vitalsense.VitalSense;
+import com.lior215.vitalsense.capabilities.AirQualityProvider;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
@@ -14,8 +15,9 @@ public class ModBreathingEvents {
     @SubscribeEvent
     public static void onClientTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
-        event.player.getCapability(AirQualityProvider.airQualityCapability).ifPresent(airQuality -> {
-            VitalSense.LOGGER.info("Registered: " + airQuality);
+        player.getCapability(AirQualityProvider.airQual).ifPresent(airQuality -> {
+            player.sendSystemMessage(Component.literal("Registaa"));
+            VitalSense.LOGGER.info("Registered AirQualityCapability");
         });
     }
 }

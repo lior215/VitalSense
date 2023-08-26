@@ -17,7 +17,6 @@ public class EyeHealthProvider implements ICapabilityProvider, INBTSerializable<
     });
     private EyeHealth eyeHealth = null;
 
-
     public final LazyOptional<EyeHealth> optional = LazyOptional.of(this::initializeEyeHealth);
 
     private EyeHealth initializeEyeHealth() {
@@ -49,6 +48,4 @@ public class EyeHealthProvider implements ICapabilityProvider, INBTSerializable<
     public void deserializeNBT(CompoundTag nbt) {
         initializeEyeHealth().loadNBTData(nbt);
     }
-
-
 }

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class AirQualityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<AirQuality> airQualityCapability = CapabilityManager.get(new CapabilityToken<AirQuality>() {
+    public static Capability<AirQuality> airQual = CapabilityManager.get(new CapabilityToken<AirQuality>() {
     });
 
     private AirQuality airQuality = null;
@@ -24,17 +24,14 @@ public class AirQualityProvider implements ICapabilityProvider, INBTSerializable
         if (this.airQuality == null) {
             this.airQuality = new AirQuality();
         }
-
         return this.airQuality;
     }
 
-
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == airQualityCapability) {
+        if (cap == airQual) {
             return optional.cast();
         }
-
         return LazyOptional.empty();
     }
 
@@ -49,7 +46,4 @@ public class AirQualityProvider implements ICapabilityProvider, INBTSerializable
     public void deserializeNBT(CompoundTag nbt) {
         initializeAirQuality().loadNBTData(nbt);
     }
-
-
 }
-

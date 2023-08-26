@@ -1,6 +1,6 @@
 package com.lior215.vitalsense.mobeffects;
 
-import com.lior215.vitalsense.effects.photophobiaEffect;
+import com.lior215.vitalsense.effects.PhotophobiaEffect;
 import com.lior215.vitalsense.utils.TimerProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
@@ -10,7 +10,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.LightLayer;
 
-public class photophobia extends MobEffect {
+public class Photophobia extends MobEffect {
 
     static TimerProvider delayEffectTimer = new TimerProvider(21);
 
@@ -18,7 +18,7 @@ public class photophobia extends MobEffect {
     private static int frame;
 
 
-    protected photophobia(MobEffectCategory pCategory, int pColor) {
+    protected Photophobia(MobEffectCategory pCategory, int pColor) {
         super(pCategory, pColor);
     }
 
@@ -37,7 +37,7 @@ public class photophobia extends MobEffect {
         } else {
             frame = 1;
         }
-        photophobiaEffect.setFrame(frame);
+        PhotophobiaEffect.setFrame(frame);
         living.sendSystemMessage(Component.literal(" "+frame));
     }
 
@@ -64,7 +64,7 @@ public class photophobia extends MobEffect {
                     }
                 }
             }
-            photophobiaEffect.setTransparency(0.0f + multiplier);
+            PhotophobiaEffect.setTransparency(0.0f + multiplier);
 
             if(pLivingEntity.level.canSeeSky(pLivingEntity.getOnPos().offset(0,+2,0)) && pLivingEntity.level.isDay()) {
                 pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 2));

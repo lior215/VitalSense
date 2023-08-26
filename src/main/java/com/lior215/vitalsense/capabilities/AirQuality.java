@@ -1,42 +1,32 @@
 package com.lior215.vitalsense.capabilities;
 
-import com.lior215.vitalsense.client.ClientEyeHealth;
 import com.lior215.vitalsense.VitalSense;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
-import static com.lior215.vitalsense.client.AirQualityOverlay.getIndicatorX;
-
 @AutoRegisterCapability
 public class AirQuality {
-    int defaultIndicatorPos = (Minecraft.getInstance().screen != null ? Minecraft.getInstance().screen.width : 0) / 2 - 94;
-    int defaultMaxQuality = 180;
+    float currentAirQuality = 0f;
+    float maxAirQuality = 100f;
 
-    int airQuality = getAirQuality();
-
-    int indicatorX = getIndicatorX;
-
-    public int getAirQuality() {
-        return this.indicatorX - this.defaultIndicatorPos;
-    }
-    
-    public void setAirQuality(int value) {
-        this.indicatorX = value + this.defaultIndicatorPos;
+    public float getCurrentAirQuality() {
+        return currentAirQuality;
     }
 
-    public int getMaxAirQuality() {
-        return this.defaultMaxQuality;
+    public float getMaxAirQuality() {
+        return maxAirQuality;
+    }
+
+    public void setCurrentAirQuality(float value) {
+        this.currentAirQuality = value;
     }
 
     public void saveNBTData(CompoundTag nbt) {
-        nbt.putFloat("airQuality", airQuality);
+        nbt.putFloat("airQuality", currentAirQuality);
     }
 
-
     public void loadNBTData(CompoundTag nbt) {
-        VitalSense.LOGGER.info("loaded nbt data for airQuality");
-        this.airQuality = nbt.getInt("airQuality");
-        ClientEyeHealth.set(nbt.getFloat("airQuality"));
+        VitalSense.LOGGER.info("Loaded air quality nbt");
+        this.currentAirQuality = nbt.getFloat("airQuality");
     }
 }

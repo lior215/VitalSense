@@ -30,17 +30,13 @@ public class AirQualityOverlay {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, AIR_QUALITY);
-        LOGGER.info("loaded");
-        LOGGER.info("Player != null");
         if (player != null && player.getInventory().contains(new ItemStack(Items.AMETHYST_SHARD))) {
             GuiComponent.blit(poseStack, x - 94, y - 54, 0, 0, 160, 16, 160, 16);
-            LOGGER.info("bliting the gui");
         }
     });
 
     public static final IGuiOverlay HUD_QUALITY_INDICATOR = ((gui, poseStack, partialTick, width, height) -> {
         int x = width / 2;
-        int y = height;
 
         Player player = Minecraft.getInstance().player;
 
@@ -48,7 +44,7 @@ public class AirQualityOverlay {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, AIR_QUALITY_INDICATOR);
         if (player != null && player.getInventory().contains(new ItemStack(Items.AMETHYST_SHARD))) {
-            GuiComponent.blit(poseStack, getIndicatorX, y - 54, 0, 0, 16, 16, 16, 16);
+            GuiComponent.blit(poseStack, getIndicatorX, height - 54, 0, 0, 16, 16, 16, 16);
             LOGGER.info("bliting the gui");
         }
     });

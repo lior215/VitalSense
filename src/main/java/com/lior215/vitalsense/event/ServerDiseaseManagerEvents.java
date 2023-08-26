@@ -2,10 +2,10 @@ package com.lior215.vitalsense.event;
 
 import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
-import com.lior215.vitalsense.effects.photophobiaEffect;
+import com.lior215.vitalsense.effects.PhotophobiaEffect;
 import com.lior215.vitalsense.effects.GlaucomaEffect;
 import com.lior215.vitalsense.effects.RedEyesEffect;
-import com.lior215.vitalsense.mobeffects.photophobia;
+import com.lior215.vitalsense.mobeffects.Photophobia;
 import com.lior215.vitalsense.mobeffects.Glaucoma;
 import com.lior215.vitalsense.mobeffects.ModMobEffects;
 import com.lior215.vitalsense.mobeffects.RedEyes;
@@ -95,20 +95,20 @@ public class ServerDiseaseManagerEvents {
     @SubscribeEvent
     public static void hasphotophobiaDisease(TickEvent.PlayerTickEvent event) {
         if (!event.player.hasEffect(ModMobEffects.photophobia.get())) {
-            photophobiaEffect.setRenderEyeDisease(false);
-            photophobiaEffect.setTransparency(0f);
-            photophobia.modEffectphotophobiaReset();
+            PhotophobiaEffect.setRenderEyeDisease(false);
+            PhotophobiaEffect.setTransparency(0f);
+            Photophobia.modEffectphotophobiaReset();
             if (event.player.level.getDayTime() % 24000 == 18000 && event.phase == TickEvent.Phase.END && event.side.isServer()) {
                 float checkIfInfected = new Random().nextFloat(10.0f);
                 event.player.sendSystemMessage(Component.literal(" " + checkIfInfected));
                 if (checkIfInfected >= 7.5f) {
-                    photophobiaEffect.setRenderEyeDisease(true);
+                    PhotophobiaEffect.setRenderEyeDisease(true);
                     event.player.addEffect(new MobEffectInstance(ModMobEffects.photophobia.get(), 1000000000));
                 }
                 checkIfInfected = 0;
             }
         } else if (event.player.hasEffect(ModMobEffects.photophobia.get())) {
-            photophobiaEffect.setRenderEyeDisease(true);
+            PhotophobiaEffect.setRenderEyeDisease(true);
         }
     }
 
@@ -117,7 +117,7 @@ public class ServerDiseaseManagerEvents {
     public static void photophobiaDamageEye(TickEvent.PlayerTickEvent event) {
         if (event.player.hasEffect(ModMobEffects.photophobia.get()) && event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.START) {
             event.player.getCapability(EyeHealthProvider.eHealth).ifPresent(eyeHealth -> {
-                if (photophobia.getMultiplier() >= 1.0f) {
+                if (Photophobia.getMultiplier() >= 1.0f) {
                     if (damageFotoFobiaTimer.getTimer() == 1) {
                         eyeHealth.reduceHealthValue(0.25f);
                         event.player.hurt(DamageSource.GENERIC, 3f);
