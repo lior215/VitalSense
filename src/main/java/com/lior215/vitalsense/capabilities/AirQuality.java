@@ -6,8 +6,12 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
 @AutoRegisterCapability
 public class AirQuality {
+
+    float minHealthValue = 0f; //you might not need it but keep it
     float currentAirQuality = 0f;
     float maxAirQuality = 100f;
+    boolean isActive = true;
+
 
     public float getCurrentAirQuality() {
         return currentAirQuality;
@@ -19,6 +23,14 @@ public class AirQuality {
 
     public void setCurrentAirQuality(float value) {
         this.currentAirQuality = value;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void copyFrom(AirQuality source) {
+        this.currentAirQuality = source.currentAirQuality;
     }
 
     public void saveNBTData(CompoundTag nbt) {
