@@ -14,10 +14,10 @@ import net.minecraft.world.entity.player.Player;
 
 public class EyeHealthSetCommand {
         public EyeHealthSetCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal("vitalsense").then(Commands.literal("eyehealth").then(Commands.literal("set").then(Commands.argument("count23", IntegerArgumentType.integer())
+            dispatcher.register(Commands.literal("vitalsense").then(Commands.literal("eyehealth").then(Commands.literal("set").then(Commands.argument("value", IntegerArgumentType.integer())
                     .executes(commandContext -> {
-                            int value23 = IntegerArgumentType.getInteger(commandContext, "value");
-                                return setEyeHealth(commandContext.getSource(), value23);
+                            int healthValue = IntegerArgumentType.getInteger(commandContext, "value");
+                            return setEyeHealth(commandContext.getSource(), healthValue);
                         })))));
         }
     private int setEyeHealth (CommandSourceStack source, int value) {

@@ -1,9 +1,12 @@
 package com.lior215.vitalsense.event;
 
-import com.lior215.vitalsense.VitalSense;
+import com.lior215.vitalsense.effects.RedEyesEffect;
+import com.lior215.vitalsense.mobeffects.ModMobEffects;
+import com.lior215.vitalsense.mobeffects.RedEyes;
 import com.lior215.vitalsense.network.ModPackets;
 import com.lior215.vitalsense.network.packets.S2CEyeHealth;
 import com.lior215.vitalsense.utils.TimerProvider;
+import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.capabilities.EyeHealthProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

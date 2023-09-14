@@ -100,7 +100,7 @@ public class RedEyesEffect {
         if (event.type == TickEvent.Type.RENDER && event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
 
             // If the player has pressed F1, the render will not be hidden
-            if (Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get() && ModCommonConfigs.ToggleDiseaseScreenOnF1.get() && GlaucomaEffect.getRenderDisease()) {
+            if (Minecraft.getInstance().options.hideGui && ModCommonConfigs.ToggleBlinkRenderOnF1.get() && ModCommonConfigs.ToggleDiseaseScreenOnF1.get() && TunnelVisionEffect.getRenderDisease()) {
                 RED_EYES_DISEASE();
             }
         }

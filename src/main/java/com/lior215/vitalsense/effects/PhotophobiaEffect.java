@@ -3,7 +3,7 @@ package com.lior215.vitalsense.effects;
 import com.lior215.vitalsense.VitalSense;
 import com.lior215.vitalsense.config.ModCommonConfigs;
 import com.lior215.vitalsense.event.ModBlinkingTimerEvents;
-import com.lior215.vitalsense.mobeffects.Glaucoma;
+import com.lior215.vitalsense.mobeffects.TunnelVision;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -81,7 +81,7 @@ public class PhotophobiaEffect {
             bufferbuilder.vertex(screenWidth, 0.0D, -90.0D).uv(1, 0).endVertex(); // IMPORTANT
             bufferbuilder.vertex(0.0D, 0.0D, -90.0D).uv(0, 0).endVertex(); // IMPORTANT
         } else {
-            Glaucoma.modEffectGlaucomaReset();
+            TunnelVision.modEffectTunnelVisionReset();
         }
         tesselator.end();
         RenderSystem.setShaderColor(0.0F, 0.0F, 1.0F, 1.0F);

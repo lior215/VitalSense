@@ -16,11 +16,10 @@ public class BlinkHud {
     private static int yRenderOrigin;
     private static int xRenderEnd;
     private static int yRenderEnd;
-    private static boolean shouldRenderFaster = false;
 
 
     public static boolean checkImageBasedOnBlinkTimerAndStatus() {
-        float divider = ModBlinkingTimerEvents.getBlinkCountdownTimer()/4;
+        float divider = ModBlinkingTimerEvents.getBlinkCountdownTimer()/4f;
         float phase1 = divider * 4;
         float phase2 = divider * 3;
         float phase3 = divider * 2;
@@ -46,7 +45,7 @@ public class BlinkHud {
                 yRenderOrigin = 2;
                 xRenderEnd = 73;
                 yRenderEnd = 13;
-            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() >= 0 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 2) {
+            } else if (ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() >= 0 && ModBlinkingTimerEvents.blinkTimerToBlink.getTimer() <= 2) { //Correction
                 xRenderOrigin = 6;
                 yRenderOrigin = 2;
                 xRenderEnd = 22;

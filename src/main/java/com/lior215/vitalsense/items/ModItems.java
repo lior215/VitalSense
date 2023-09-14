@@ -14,9 +14,6 @@ public class ModItems {
     public static final RegistryObject<Item> AIR_O_METER = MOD_ITEMS.register("air_o_meter",
             () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
 
-    public static final RegistryObject<Item> DIVING_GOGGLES = MOD_ITEMS.register("diving_goggles",
-            () -> new DivingGogglesItem(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
-
     public static void register(IEventBus eventBus) {
         MOD_ITEMS.register(eventBus);
     }

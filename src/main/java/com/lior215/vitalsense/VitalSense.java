@@ -1,5 +1,6 @@
 package com.lior215.vitalsense;
 
+import com.lior215.vitalsense.blocks.ModBlocks;
 import com.lior215.vitalsense.config.ModClientConfigs;
 import com.lior215.vitalsense.config.ModCommonConfigs;
 import com.lior215.vitalsense.effects.RenderBlinkEffectScreen;
@@ -38,6 +39,7 @@ public class VitalSense {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ModClientConfigs.SPEC, "vitalsense-client-config.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModCommonConfigs.SPEC, "vitalsense-common-config.toml");
 
+        ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
         MOD_EFFECTS.register(modEventBus);
 

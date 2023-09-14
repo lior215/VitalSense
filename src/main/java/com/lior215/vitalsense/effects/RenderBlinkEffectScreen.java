@@ -45,7 +45,6 @@ public class RenderBlinkEffectScreen {
     public static void setSkipDelay(boolean toggle) {
         skipDelay = toggle;
     }
-
     public static void setRedEyesDisease(boolean toggle) {
         redEyesDisease = toggle;
     }
@@ -144,8 +143,6 @@ public class RenderBlinkEffectScreen {
         mc.player.sendSystemMessage(Component.literal("U: " + UV_U + " V: " + UV_V));
     }
 
-    //static int fps = Minecraft.getInstance().getWindow().getRefreshRate(); //check
-
 
 
 
@@ -168,7 +165,7 @@ public class RenderBlinkEffectScreen {
         @SubscribeEvent
         public static void onRenderTick(TickEvent.RenderTickEvent event) throws NoSuchFieldException, IllegalAccessException {
             if (event.type == TickEvent.Type.RENDER && event.side.isClient() && event.phase == TickEvent.Phase.END && ModBlinkingTimerEvents.getPlayerBlinking() && ModCommonConfigs.ToggleBlinkMechanic.get()) {
-                if (renderdelay == 1 || skipDelay == true) {
+                if (renderdelay == 1 || skipDelay) {
                 assert mc.player != null;
                 // Timer manager
                 if (Timer.getTimer() <= 0) {

@@ -67,7 +67,7 @@ public class Photophobia extends MobEffect {
             PhotophobiaEffect.setTransparency(0.0f + multiplier);
 
             if(pLivingEntity.level.canSeeSky(pLivingEntity.getOnPos().offset(0,+2,0)) && pLivingEntity.level.isDay()) {
-                pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 2));
+                pLivingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1));
 
             }
         } else if (delayEffectTimer.getTimer() == 0) {
