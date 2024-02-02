@@ -1,0 +1,22 @@
+package com.liorcat.vitalsense.registries.commands;
+
+import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+
+public class EyeHealthInfo {
+        public EyeHealthInfo(CommandDispatcher<CommandSourceStack> dispatcher) {
+            dispatcher.register(Commands.literal("vitalsense").then(Commands.literal("eyehealth").then(Commands.literal("info")
+                    .executes(commandContext -> eyeHealthInfo(commandContext.getSource())))));
+        }
+    private int eyeHealthInfo (CommandSourceStack source) {
+        Player player = source.getPlayer();
+        /*
+        EyeHealth cap = player.getCapability(EyeHealthProvider.eHealth);
+        source.sendSuccess(() -> Component.literal("Your Eye health is " + cap.getHealthValue()), true);
+         */
+        return 1;
+    }
+}
