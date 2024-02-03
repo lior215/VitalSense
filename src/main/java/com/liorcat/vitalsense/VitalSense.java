@@ -4,6 +4,7 @@ import com.liorcat.vitalsense.data.VSAttachmentTypes;
 import com.liorcat.vitalsense.registries.VSBlocks;
 import com.liorcat.vitalsense.config.ModClientConfigs;
 import com.liorcat.vitalsense.config.ModCommonConfigs;
+import com.liorcat.vitalsense.registries.VSCreativeTab;
 import com.liorcat.vitalsense.registries.effects.RenderBlinkEffectScreen;
 import com.liorcat.vitalsense.registries.VSItems;
 import com.liorcat.vitalsense.registries.VSMobEffects;
@@ -40,6 +41,7 @@ public class VitalSense {
         VSItems.ITEMS.register(modEventBus);
         VSMobEffects.EFFECTS.register(modEventBus);
         VSAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
+        VSCreativeTab.CREATIVE_MODE_TABS.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
     }
