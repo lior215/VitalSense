@@ -2,7 +2,7 @@ package com.liorcat.vitalsense.registries.effects;
 
 import com.liorcat.vitalsense.VitalSense;
 import com.liorcat.vitalsense.config.ModCommonConfigs;
-import com.liorcat.vitalsense.event.BlinkEvents;
+import com.liorcat.vitalsense.event.helper.BlinkEvents;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;

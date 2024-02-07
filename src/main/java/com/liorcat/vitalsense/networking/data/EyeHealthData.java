@@ -1,4 +1,4 @@
-package com.liorcat.vitalsense.network.data;
+package com.liorcat.vitalsense.networking.data;
 
 import com.liorcat.vitalsense.VitalSense;
 import net.minecraft.network.FriendlyByteBuf;

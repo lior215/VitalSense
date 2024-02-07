@@ -2,7 +2,7 @@ package com.liorcat.vitalsense.registries.effects;
 
 import com.liorcat.vitalsense.VitalSense;
 import com.liorcat.vitalsense.config.ModCommonConfigs;
-import com.liorcat.vitalsense.event.BlinkEvents;
+import com.liorcat.vitalsense.event.helper.BlinkEvents;
 import com.liorcat.vitalsense.utils.LightLevelProvider;
 import com.liorcat.vitalsense.utils.TimerProvider;
 import com.mojang.blaze3d.systems.RenderSystem;

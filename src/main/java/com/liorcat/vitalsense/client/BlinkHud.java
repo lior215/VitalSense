@@ -1,7 +1,7 @@
 package com.liorcat.vitalsense.client;
 
 import com.liorcat.vitalsense.VitalSense;
-import com.liorcat.vitalsense.event.BlinkEvents;
+import com.liorcat.vitalsense.event.helper.BlinkEvents;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;

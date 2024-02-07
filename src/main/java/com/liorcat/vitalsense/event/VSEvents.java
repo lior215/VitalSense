@@ -2,6 +2,7 @@ package com.liorcat.vitalsense.event;
 
 import com.liorcat.vitalsense.VitalSense;
 import com.liorcat.vitalsense.capabilities.VSCapabilities;
+import com.liorcat.vitalsense.capabilities.air.AirQualityPlayerWrapper;
 import com.liorcat.vitalsense.capabilities.eyes.EyeHealthPlayerWrapper;
 import com.liorcat.vitalsense.client.AirQualityOverlay;
 import com.liorcat.vitalsense.client.BlinkHud;
@@ -37,6 +38,7 @@ public class VSEvents {
         @SubscribeEvent
         public static void onAttachCapabilitiesPlayerEyeHealth(RegisterCapabilitiesEvent event) {
             event.registerEntity(VSCapabilities.EyeHealth.ENTITY, EntityType.PLAYER, (player, ctx) -> new EyeHealthPlayerWrapper(player));
+            event.registerEntity(VSCapabilities.AirQuality.ENTITY, EntityType.PLAYER, (player, ctx) -> new AirQualityPlayerWrapper(player));
         }
     }
 }

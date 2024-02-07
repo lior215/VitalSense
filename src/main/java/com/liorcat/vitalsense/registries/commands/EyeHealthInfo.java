@@ -1,5 +1,7 @@
 package com.liorcat.vitalsense.registries.commands;
 
+import com.liorcat.vitalsense.capabilities.VSCapabilities;
+import com.liorcat.vitalsense.data.eyes.IEyeHealth;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -13,10 +15,8 @@ public class EyeHealthInfo {
         }
     private int eyeHealthInfo (CommandSourceStack source) {
         Player player = source.getPlayer();
-        /*
-        EyeHealth cap = player.getCapability(EyeHealthProvider.eHealth);
-        source.sendSuccess(() -> Component.literal("Your Eye health is " + cap.getHealthValue()), true);
-         */
+        IEyeHealth cap = player.getCapability(VSCapabilities.EyeHealth.ENTITY);
+        source.sendSuccess(() -> Component.literal("Your Eye health is " + cap.getHealth()), true);
         return 1;
     }
 }

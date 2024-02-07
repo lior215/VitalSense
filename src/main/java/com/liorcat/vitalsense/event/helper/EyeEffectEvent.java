@@ -1,4 +1,4 @@
-package com.liorcat.vitalsense.event;
+package com.liorcat.vitalsense.event.helper;
 
 import com.liorcat.vitalsense.registries.VSMobEffects;
 import com.liorcat.vitalsense.registries.effects.RedEyesEffect;

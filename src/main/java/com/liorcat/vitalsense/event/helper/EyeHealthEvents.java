@@ -1,4 +1,4 @@
-package com.liorcat.vitalsense.event;
+package com.liorcat.vitalsense.event.helper;
 
 import com.liorcat.vitalsense.utils.TimerProvider;
 import net.neoforged.fml.LogicalSide;

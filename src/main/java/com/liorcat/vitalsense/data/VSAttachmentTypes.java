@@ -1,6 +1,7 @@
 package com.liorcat.vitalsense.data;
 
 import com.liorcat.vitalsense.VitalSense;
+import com.liorcat.vitalsense.data.air.AirQuality;
 import com.liorcat.vitalsense.data.eyes.EyeHealth;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -14,4 +15,6 @@ public class VSAttachmentTypes {
     public static final Supplier<AttachmentType<EyeHealth>> EYE_HEALTH = ATTACHMENT_TYPES.register(
             "eye_health", () -> AttachmentType.serializable(EyeHealth::new).copyOnDeath().build());
 
+    public static final Supplier<AttachmentType<AirQuality>> AIR_QUALITY = ATTACHMENT_TYPES.register(
+            "air_quality", () -> AttachmentType.serializable(AirQuality::new).build());
 }

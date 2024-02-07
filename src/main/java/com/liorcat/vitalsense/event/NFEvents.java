@@ -1,29 +1,23 @@
 package com.liorcat.vitalsense.event;
 
 import com.liorcat.vitalsense.VitalSense;
+import com.liorcat.vitalsense.capabilities.VSCapabilities;
+import com.liorcat.vitalsense.event.helper.AirQualityEvents;
+import com.liorcat.vitalsense.event.helper.BlinkEvents;
+import com.liorcat.vitalsense.event.helper.EyeEffectEvent;
+import com.liorcat.vitalsense.event.helper.EyeHealthEvents;
 import com.liorcat.vitalsense.registries.VSKeyBindings;
-import com.liorcat.vitalsense.registries.VSMobEffects;
 import com.liorcat.vitalsense.registries.commands.EyeHealthInfo;
 import com.liorcat.vitalsense.registries.commands.EyeHealthSetCommand;
-import com.liorcat.vitalsense.registries.effects.RedEyesEffect;
-import com.liorcat.vitalsense.registries.effects.TunnelVisionEffect;
-import com.liorcat.vitalsense.registries.mobeffects.RedEyes;
-import com.liorcat.vitalsense.registries.mobeffects.TunnelVision;
 import com.liorcat.vitalsense.registries.screen.EyeGui;
-import com.liorcat.vitalsense.utils.TimerProvider;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.LogicalSide;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.server.command.ConfigCommand;
-
-import java.util.Random;
 
 public class NFEvents {
     @Mod.EventBusSubscriber(modid = VitalSense.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -49,6 +43,7 @@ public class NFEvents {
 
         @SubscribeEvent
         public static void playerTick(TickEvent.PlayerTickEvent event) {
+            AirQualityEvents.playerTick(event);
             BlinkEvents.playerBlinkTick(event);
             EyeHealthEvents.tickPlayerEyeHealthValues(event);
             EyeHealthEvents.damagePlayerUnderWater(event);
