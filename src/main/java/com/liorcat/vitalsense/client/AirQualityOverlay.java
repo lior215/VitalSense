@@ -31,7 +31,7 @@ public class AirQualityOverlay {
         VitalSense.LOGGER.debug("Air quality: {}", airQuality.getQuality());
 
         if (player.getMainHandItem().is(VSItems.AIR_O_METER.get())) {
-            guiGraphics.blit(AIR_QUALITY_INDICATOR, (int)  (width / 3.7 + airQuality.getQuality()), height - 54, 0, 0, 16, 16, 16, 16);
+            guiGraphics.blit(AIR_QUALITY_INDICATOR, width / 2 - 94, height - 54, 0, 0, 16, 16, 16, 16);
         }
     });
 }

@@ -12,7 +12,9 @@ public class AirQualityEvents {
             Player player = event.player;
             IAirQuality airQuality = player.getCapability(VSCapabilities.AirQuality.ENTITY);
             if (player.isUnderWater()) {
-                airQuality.setQuality(airQuality.getQuality()-1);
+                if (event.player.level().getGameTime() % 20 == 0) {
+                    airQuality.tryDecreaseQuality(1);
+                }
             }
         }
     }
